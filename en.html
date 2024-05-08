@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+        pre {
+            white-space: pre-wrap; /* 保留换行 */
+            font-family: monospace; /* 设置字体 */
+            background-color: #f4f4f4; /* 背景色 */
+            padding: 10px; /* 内边距 */
+            border-radius: 5px; /* 圆角 */
+            border: 1px solid #ddd; /* 边框 */
+            max-width: 600px; /* 设置最大宽度 */
+            overflow-y: auto; /* 添加纵向滚动条 */
+            max-height: 500px; /* 设置最大高度 */
+        }
+        #content {
+            display: flex;
+            justify-content: center;
+        }   
+
+    </style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ARIO</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="styles.css"> <!-- 根据需要添加自定义样式表 -->
+</head>
+<body>
+
+<section class="hero">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-two-thirds is-centered has-text-centered">
+                    <h1 class="title is-1 publication-title">ARIO</h1>
+                    <h2 class="subtitle is-2 publication-subtitle">All Robots In One</h2>
+                    <div class="is-size-4 publication-authors">
+                        <span class="author-block">
+                          <a href="https://openi.pcl.ac.cn/">Peng Cheng Laboratory</a>&nbsp;&nbsp;&nbsp;
+                          <a href="https://github.com/agilexrobotics?tab=repositories">AgileX Robotics</a><br>
+                          <a href="">Sun Yat-sen University</a>&nbsp;&nbsp;&nbsp;
+                          <a href="">Southern University of Science and Technology</a><br>
+                          <a href="">The University of Hong Kong</a>&nbsp;&nbsp;&nbsp;
+                          <a href="">Technical University of Munich</a>&nbsp;&nbsp;&nbsp;
+                        </span>
+                      </div>
+                      <img src="LOGO.png" style="width: 80%;">
+                </div>
+            </div>
+            <div class="column has-text-centered">
+                            <div class="publication-links">
+
+                                 <span class="link-block">
+                                    <a href="./en.html" class="external-link button is-normal is-rounded is-dark" target="_blank">
+                                      <span class="icon">
+                                          <i class="fas fa-language"></i>
+                                      </span>
+                                      <span>EN</span>
+                                    </a>
+                                 </span>
+
+                                <span class="link-block">
+                                    <a target="_blank" href="倡议书.pdf" class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon">
+                                            <svg class="svg-inline--fa fa-file-pdf fa-w-12" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file-pdf" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 62.9-21.9-12.7-9.6-24.9-23.4-34.5-40.8zM86.1 428.1c0 .8 13.2-5.4 34.9-40.2-6.7 6.3-29.1 24.5-34.9 40.2zM248 160h136v328c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V24C0 10.7 10.7 0 24 0h200v136c0 13.2 10.8 24 24 24zm-8 171.8c-20-12.2-33.3-29-42.7-53.8 4.5-18.5 11.6-46.6 6.2-64.2-4.7-29.4-42.4-26.5-47.8-6.8-5 18.3-.4 44.1 8.1 77-11.6 27.6-28.7 64.6-40.8 85.8-.1 0-.1.1-.2.1-27.1 13.9-73.6 44.5-54.5 68 5.6 6.9 16 10 21.5 10 17.9 0 35.7-18 61.1-61.8 25.8-8.5 54.1-19.1 79-23.2 21.7 11.8 47.1 19.5 64 19.5 29.2 0 31.2-32 19.7-43.4-13.9-13.6-54.3-9.7-73.6-7.2zM377 105L279 7c-4.5-4.5-10.6-7-17-7h-6v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-74.1 255.3c4.1-2.7-2.5-11.9-42.8-9 37.1 15.8 42.8 9 42.8 9z"></path></svg><!-- <i class="fas fa-file-pdf"></i> Font Awesome fontawesome.com -->
+                                        </span>
+                                        <span><b>PDF</b></span>
+                                    </a>
+                                    <a target="_blank" href="https://github.com/agilexrobotics/cobot_magic" class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                        <svg class="svg-inline--fa fa-github fa-w-16" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" data-fa-i2svg=""><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg><!-- <i class="fab fa-github"></i> Font Awesome fontawesome.com -->
+                                    </span>
+                                    <span><b>Hardware Code</b></span>
+                                    </a>
+
+                                    <a target="_blank" href="https://github.com/agilexrobotics/mobile_aloha_sim" class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                        <svg class="svg-inline--fa fa-github fa-w-16" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" data-fa-i2svg=""><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg><!-- <i class="fab fa-github"></i> Font Awesome fontawesome.com -->
+                                    </span>
+                                    <span><b>Simulation</b></span>
+                                    </a>
+
+                                    <a target="_blank" href="https://openi.pcl.ac.cn/ARIO/Songling_datasets/datasets" class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                        <svg class="svg-inline--fa fa-github fa-w-16" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" data-fa-i2svg=""><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg><!-- <i class="fab fa-github"></i> Font Awesome fontawesome.com -->
+                                    </span>
+                                    <span><b>Dataset</b></span>
+                                    </a>
+                                </span>
+                            </div>
+
+                        </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-two-thirds">
+            <h2 class="title is-2">Project Background</h2>
+            <div class="content has-text-justified">
+             <p>
+                Embodied intelligence currently leads the artificial intelligence field, seen as the essential pathway to achieving general artificial intelligence. Developed countries, led by the United States, along with major technology players like OpenAI and NVIDIA, have recognized embodied intelligence as a critical strategic direction, investing substantial resources into its advancement. At the same time, China's related industries and some leading research institutions are also devoting efforts to embodied intelligence. For example, companies like AgileX Robotics, which offer hardware support for Stanford projects <a href="https://mobile-aloha.github.io">Mobile Aloha</a>, actively engage in and promote Chinese research initiatives and the application of findings in related areas.<br> <br>
+                In the era of large-scale models, enhancing model performance relies on augmenting data volume and expanding model scale. Establishing the groundwork for large-scale embodied intelligence models and creating an extendable platform for embodied intelligence applications necessitates an open-source, extensive, and high-quality dataset for robot perception and operation. Much like ImageNet from Stanford University has catalyzed research in computer vision, integral to national strategic technological prowess, we aim to utilize the "China Computing Power Network" and the "Openi" open-source ecosystem to spearhead the development of an equally impactful open-source dataset in embodied intelligence, named ARIO (All Robots In One).
+              </p>
+            </div>
+          </div>
+    </div>
+    </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2 class="title is-2" style="text-align: center;">Cases</h2>
+    <div class="columns is-centered">
+      <div class="column is-two-fifths is-centered has-text-centered">
+        <video controls="" autoplay="" loop="" muted="" playsinline="" src="twist_button.mp4" poster="./resources/loading-icon.gif" style="border: 1px solid #bbb; border-radius: 10px; margin: 1.0%;"></video>
+      </div>
+      <div class="column is-two-fifths is-centered has-text-centered">
+        <video controls="" autoplay="" loop="" muted="" playsinline="" src="inference.mp4" poster="./resources/loading-icon.gif" style="border: 1px solid #bbb; border-radius: 10px; margin: 1.0%;"></video>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+     <div class="columns is-centered has-text-centered">
+          <div class="column is-two-thirds">
+            <h2 class="title is-2">Data collection</h2>
+            <div class="content has-text-justified">
+              <p>
+                The overall data file structure is divided into: collection-series-task-episode. Collection refers to the data set sample submitted and uploaded at one time, which may contain different scenes and robot types. Series refers to the same scene and the same robot collected A series of data, such as a series of data collected by a dual-arm robot in the kitchen, may include different tasks. Task is a specific task, such as grabbing apples. The same task can be collected repeatedly multiple times. Episode is a specific task. Complete collection process. Under the episode, sensors collect data. Each sensor can collect data by itself according to its own frequency, but it must be based on the same timestamp. The sample file structure is as follows:
+              </p>
+            </div>
+          </div>
+    </div>
+    <div id="content" class="content">
+    <pre>
+collection (sample of data set submitted at one time)
+
+│ commit.yaml (Author information and declaration)
+
+│
+
+├─series-1 (Same scene, same robot)
+
+│ │  calibration_1.yaml (Camera1 calibration parameters)
+
+│ │  calibration_cam1_lidar1.yaml (Camera1 and Lidar1 calibration parameters)
+
+│ │  IMU.pdf (IMU instruction)
+
+│ │  information.yaml (Scene description, robot information and other sensor numbers and information)
+
+│ │  touch.pdf (Touch sensor instruction)
+
+│  │     AgileX Robots instruction.pdf
+
+│ │
+
+│ ├─task-1 (A task. For example: Pick up an Apple)
+
+│ │  │  description.yaml（instruction）
+
+│ │  │  task_record.mp4 (Video of each task)
+
+│ │  │
+
+│ │  ├─episode-1 (A whole data collection process)
+
+│ │  │  │  audio-1-1709554382234.aac (Audio data)
+
+│ │  │  │  base.txt (Mobile base motion data)
+
+│ │  │  │  IMU-1.txt (IMU data)
+
+│ │  │  │  left_master_arm_joint-0.txt (Data of left master arm joint-0)
+
+│ │  │  │  left_master_gripper.txt (Data of left master gripper)
+
+│ │  │  │  left_slave_arm_joint-0.txt (Data of left slave arm joint-0)
+
+│ │  │  │  left_slave_gripper.txt (Data of left slave gripper)
+
+│ │  │  │  pan_tilt.txt (Data of pan tilt)
+
+│ │  │  │  right_master_arm_joint-5.txt (Data of right master arm joint-5)
+
+│ │  │  │  right_master_gripper.txt (Data of right master gripper)
+
+│ │  │  │  right_slave_arm_joint-5.txt (Data of right slave arm joint-5)
+
+│ │  │  │  right_slave_gripper.txt (Data of right slave gripper)
+
+│ │  │  │
+
+│ │  │  ├─cam-1 (Images recorded by camera 1. The collecting frame should >=30 FPS)
+
+│ │  │  │    1709554382234.png
+
+│ │  │  │    1709554383638.png
+
+│ │  │  │
+
+│ │  │  ├─cam-2
+
+│ │  │  │    1709554382234.png
+
+│ │  │  │    1709554383638.png
+
+│ │  │  │
+
+│ │  │  ├─lidar-1 (PCD collected by Lidar1. xyz unit: m)
+
+│ │  │  │    1709554382234.ply
+
+│ │  │  │    1709554382334.ply
+
+│ │  │  │
+
+│ │  │  ├─lidar-2
+
+│ │  │  │    1709554382235.ply
+
+│ │  │  │    1709554382354.ply
+
+│ │  │  │
+
+│ │  │  ├─rgbd-1 (PCD Data collected by rgbd 1)
+
+│ │  │  │    1709554382234.ply
+
+│ │  │  │    1709554383630.ply
+
+│ │  │  │
+
+│ │  │  └─touch-1 (Touch sensor1 data)
+
+│ │  │      1709554382234.txt
+
+│ │  │
+
+│ │  └─episode-2
+
+│ └─task-2
+
+│   │  description.yaml
+
+│   │  task_record.mp4
+
+│   │
+
+│   └─episode-1
+
+│
+
+└─series-2
+
+│  information.yaml
+
+│    AgileX robot2 instruction.pdf
+
+  │
+
+  └─task-1
+
+​    │  description.yaml
+
+​    │  task_record.mp4
+
+​    │
+
+​    └─episode-1
+        </pre>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>
+            <strong>ARIO</strong> - All robots in one.
+        </p>
+    </div>
+</footer>
+
+<script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+  // 使用 fetch 函数加载 Markdown 文件，并将其转换为 HTML
+  fetch('./File/data_structure.md')
+    .then(response => response.text())
+    .then(text => {
+      // 将 Markdown 文本转换为 HTML
+      const html = marked(text);
+      // 将生成的 HTML 插入到 id 为 content 的元素中
+      document.getElementById('content').innerHTML = html;
+    });
+</script> -->
+
+
+
+</body>
+</html>
+
+
+</body>
+</html>
