@@ -401,9 +401,7 @@ that the outputs of the online network and the target network are consistent.
                   // Load OBJ and MTL files
                   
                   const mtlLoader = new MTLLoader();
-                  mtlLoader.resourcePath = './files/obj/harmmer/';
-                  mtlLoader.path = './files/obj/harmmer/';
-                  // mtlLoader.setPath(`files/obj/${model}/`);
+                  mtlLoader.setPath(`files/obj/${model}/`);
                   mtlLoader.load('base.mtl', (materials) => {
                       materials.preload();
                       console.log(materials);
