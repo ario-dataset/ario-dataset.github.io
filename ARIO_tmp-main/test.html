@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>3D Model Viewer</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <style>
+    .thumbnail-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .thumbnail-container img {
+      width: 100%;
+      height: auto;
+      cursor: pointer;
+    }
+
+    #3d-viewer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    #viewer {
+      width: 80%;
+      height: 80%;
+    }
+
+    #close-viewer {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      background: #fff;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <section class="section" style="margin-top: -60px">
+    <div class="container">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-two-thirds">
+          <h2 class="title is-2">Object Browse</h2>
+          <div class="content has-text-justified">
+            <p>
+              The author team would like to acknowledge <a href="https://liang-zx.github.io/">Zhixuan Liang </a>and <a href="https://yaomarkmu.github.io/">Yao Mu</a> from the University of Hong Kong for their helpful technical discussion and suggestions.<br><br>
+              Our code is built upon 
+              <a href="https://github.com/YanjieZe/3D-Diffusion-Policy" target="_blank">3D Diffusion Policy</a>, 
+              <a href="https://github.com/Dai-Wenxun/MotionLCM" target="_blank">MotionLCM</a>, 
+              <a href="https://github.com/luosiallen/latent-consistency-model" target="_blank">Latent Consistency Model</a>, 
+              <a href="https://github.com/real-stanford/diffusion_policy" target="_blank">Diffusion Policy</a>, 
+              <a href="https://github.com/microsoft/VRL3" target="_blank">VRL3</a>, 
+              <a href="https://github.com/Farama-Foundation/Metaworld" target="_blank">Metaworld</a>, 
+              and 
+              <a href="https://github.com/GuanxingLu/ManiGaussian" target="_blank">ManiGaussian</a>. 
+              We would like to thank the authors for their excellent works.
+            </p>
+          </div>
+          <div class="thumbnail-container" id="3d-models">
+            <!-- 缩略图将通过JavaScript动态添加 -->
+          </div>
+          <div id="3d-viewer" style="display: none;">
+            <button id="close-viewer" onclick="closeViewer()">Close</button>
+            <div id="viewer" style="width: 80%; height: 80%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://qdds666.oss-cn-hangzhou.aliyuncs.com/18559677286/three.min.js"></script>
+  <script src="https://qdds666.oss-cn-hangzhou.aliyuncs.com/18559677286/MTLLoader.js"></script>
+  <script src="https://qdds666.oss-cn-hangzhou.aliyuncs.com/18559677286/OBJMTLLoader.js"></script>
+  <script src="https://qdds666.oss-cn-hangzhou.aliyuncs.com/18559677286/OrbitControls.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const models = [
+        "hammer",
+        // 添加其他模型的名称
+      ];
+
+      const container = document.getElementById("3d-models");
+
+      models.forEach((model) => {
+        const thumbnail = document.createElement("img");
+        thumbnail.src = `files/obj/${model}/texture_diffuse.png`; // 使用模型的贴图作为缩略图
+        thumbnail.alt = model;
+        thumbnail.onerror = function() {
+          console.error(`Failed to load image: files/obj/${model}/texture_diffuse.png`);
+        };
+        thumbnail.addEventListener("click", () => openViewer(model));
+        container.appendChild(thumbnail);
+      });
+    });
+
+    function openViewer(model) {
+      document.getElementById("3d-viewer").style.display = "flex";
+      loadModel(model);
+    }
+
+    function closeViewer() {
+      document.getElementById("3d-viewer").style.display = "none";
+      const viewer = document.getElementById("viewer");
+      while (viewer.firstChild) {
+        viewer.removeChild(viewer.firstChild);
+      }
+    }
+
+    function loadModel(model) {
+      const viewer = document.getElementById("viewer");
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, viewer.offsetWidth / viewer.offsetHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer();
+      renderer.setSize(viewer.offsetWidth, viewer.offsetHeight);
+      viewer.appendChild(renderer.domElement);
+
+      const controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+
+      const light = new THREE.AmbientLight(0x404040);
+      scene.add(light);
+
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+      directionalLight.position.set(0, 1, 1).normalize();
+      scene.add(directionalLight);
+
+      const objMTLLoader = new THREE.OBJMTLLoader();
+
+      objMTLLoader.setPath(`files/obj/${model}/`);
+      objMTLLoader.load('textured.obj', 'base.mtl', function (object) {
+        scene.add(object);
+        object.position.set(0, -0.5, 0);
+        object.scale.set(0.5, 0.5, 0.5);
+      }, undefined, function (error) {
+        console.error(`Error loading OBJ or MTL file: ${error}`);
+      });
+
+      camera.position.z = 2;
+
+      function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+        renderer.render(scene, camera);
+      }
+      animate();
+    }
+  </script>
+</body>
+</html>
