@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="description" content="ManiCM: Real-time 3D Diffusion Policy via Consistency Model for Robotic Manipulation">
+  <meta name="description" content="???">
   <meta name="keywords" content="Robotics, Mobile Manipulation, Consistency Model">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ManiCM</title>
+  <title>Yao Mark Mu</title>
 
   <style>
   .video-container {
@@ -99,21 +99,16 @@
     <div class="container">
       <div class="columns is-centered">
         <div class="column is-two-thirds is-centered has-text-centered">
-          <h1 class="title is-1 publication-title">ManiCM</h1>
-          <h2 class="subtitle is-2 publication-subtitle">Real-time 3D Diffusion Policy via Consistency Model for Robotic Manipulation</h2>
+          <h1 class="title is-1 publication-title">Yao Mark Mu</h1>
+          <h2 class="subtitle is-2 publication-subtitle">Yao Mark Mu</h2>
           <div class="is-size-4 publication-authors">
             <span class="author-block">
-              <a href="https://guanxinglu.github.io/">Guanxing Lu</a><sup>1</sup>*&nbsp;&nbsp;&nbsp;
-              <a>Zifeng Gao</a><sup>1</sup>*&nbsp;&nbsp;&nbsp;
               <a href="https://tianxingchen.github.io">Tianxing Chen</a><sup>2</sup>&nbsp;&nbsp;&nbsp;
-              <a href="https://github.com/Dai-Wenxun">Wenxun Dai</a><sup>2</sup>&nbsp;&nbsp;&nbsp;<br>
-              <a href="https://ziweiwangthu.github.io/">Ziwei Wang</a><sup>3</sup>&nbsp;&nbsp;&nbsp;and&nbsp;&nbsp;
-              <a href="https://andytang15.github.io/">Yansong Tang</a><sup>1†</sup>
             </span>
+            <br>
             <span class="author-block">
-              <sup>1</sup>Tsinghua Shenzhen International Graduate School, Tsinghua University<br>
-              <sup>2</sup>Shanghai AI Laboratory
-              <sup>3</sup>Carnegie Mellon University
+              <!-- <sup>1</sup>Tsinghua Shenzhen International Graduate School, Tsinghua University<br> -->
+              China
             </span>
             <p style="font-size: medium; margin-top: 5px;"><sup>*</sup>Equal Contributions, <sup>†</sup>Corresponding author</p>
           </div>
@@ -158,149 +153,13 @@
   </div>
 </section>
 
-<section class="section" style="margin-top: -60px">
-  <div class="container">
-    <!-- Abstract. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-two-thirds">
-        <h2 class="title is-2">Abstract</h2>
-        <div class="content has-text-justified">
-          <p>
-            Diffusion models have been verified to be effective in generating complex distributions from natural images to motion trajectories. Recent diffusion-based methods show impressive performance in 3D robotic manipulation tasks, whereas they suffer from severe runtime inefficiency due to multiple denoising steps, especially with high-dimensional observations. To this end, we propose a real-time robotic manipulation model named <b>ManiCM</b> that imposes the consistency constraint to the diffusion process, so that the model can generate robot actions in only one-step inference.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</section>
-
-<section class="section" style="margin-top: -60px">
-  <div class="container">
-    <h2 class="title is-2" style="text-align: center;">Framework of ManiCM</h2>
-
-    <div style="text-align: center; margin-top: 20px;">
-      <img src="./files/2024-ManiCM.png" style="width: 50%">
-    </div>
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-two-thirds">
-        <div class="content has-text-justified">
-          <p>
-            Given a raw action sequence a<sub>0</sub>, we first perform a forward diffusion to introduce
-noise over n + k steps. The resulting noisy sequence a<sub>n+k</sub> is then fed into both the online network and the
-teacher network to predict the clean action sequence. The target network uses the teacher network’s k-step
-estimation results to predict the action sequence. To enforce self-consistency, a loss function is applied to ensure
-that the outputs of the online network and the target network are consistent.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  </div>
-</section>
-
 
 <section class="section" style="margin-top: -60px">
   <div class="container">
     <!-- Abstract. -->
     <div class="columns is-centered has-text-centered">
       <div class="column is-two-thirds">
-        <h2 class="title is-2">Results</h2>
-      </div>
-    </div>
-
-
-  
-  
-  <div class="container">
-    <!-- Abstract. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-two-thirds">
-        <div class="content has-text-justified" style="font-size: larger; font-weight: 800">
-          31 tasks (Adroit and MetaWorld)
-        </div>
-        <div class="video-container" id="videoContainer">
-          <!-- 视频标签将通过JavaScript动态添加 -->
-        </div>
-        <script>
-          // // 获取视频容器
-          // var container = document.getElementById('videoContainer');
-        
-          // // 函数用于创建视频元素并添加到容器
-          // function createVideoElement(index) {
-          //   var video = document.createElement('video');
-          //   video.className = 'video-item';
-          //   video.setAttribute('controls', '');
-          //   video.setAttribute('autoplay', '');
-          //   video.setAttribute('loop', '');
-          //   video.muted = true; // 静音自动播放
-        
-          //   var source = document.createElement('source');
-          //   source.src = 'videos/' + index + '.mp4';
-          //   source.type = 'video/mp4';
-        
-          //   video.appendChild(source);
-        
-          //   // 视频加载完成后自动播放
-          //   video.addEventListener('loadedmetadata', function() {
-          //     video.style.display = 'block'; // 显示视频
-          //     video.play(); // 播放视频
-          //   });
-        
-          //   return video;
-          // }
-        
-          // // 动态创建并添加32个视频到页面
-          // for (var i = 1; i <= 32; i++) {
-          //   container.appendChild(createVideoElement(i));
-          // }
-        </script>
-        <div class="content has-text-justified" style="margin-top: 10px">
-          We conduct our experiments in the well-recognized MetaWorld and Adroit benchmarks, resulting in a total of 31 tasks. These tasks range from simple pick-and-place tasks to more challenging scenarios such as dexterous manipulation, which ensure that the model is effective across various scenarios.
-        </div>
-      </div>
-    </div>
-  <div class="container">
-    <!-- Abstract. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-two-thirds">
-        <div class="content has-text-justified" style="font-size: larger; font-weight: 800">
-          Comparisons on Runtime
-        </div>
-        <div style="text-align: center; margin-top: 20px;">
-          <img src="./files/result1.jpg" style="width: 80%">
-        </div>
-        <div class="content has-text-justified">
-          We evaluate 100 episodes on 31 challenging tasks from Adroit and Metaworld across 3 random seeds and report the time consumption per step (s) with standard deviation. The second results are underlined and the best results are bold. ‘∗’ denotes the reproduced version. The performance of our ManiCM in one-step inference surpasses all state-of-the-art models, providing ample evidence for the effectiveness of consistency distillation.
-        </div>
-      </div>
-    </div>
-  <div class="container">
-    <!-- Abstract. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-two-thirds">
-        <div class="content has-text-justified" style="font-size: larger; font-weight: 800">
-          Comparisons on Success Rate
-        </div>
-        <div style="text-align: center; margin-top: 20px;">
-          <img src="./files/result2.jpg" style="width: 80%">
-        </div>
-        <div class="content has-text-justified">
-          We evaluate 100 episodes on 31 challenging tasks from Adroit and Metaworld across 3 random seeds and report the success rates (%) with standard deviation. The second results are underlined and the best results are bold. ‘∗’ denotes the reproduced version. The performance of our ManiCM in one-step inference surpasses all state-of-the-art models, providing ample evidence for the effectiveness of consistency distillation.
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<section class="section" style="margin-top: -60px">
-  <div class="container">
-    <!-- Abstract. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-two-thirds">
-        <h2 class="title is-2">Object Browse</h2>
+        <h2 class="title is-2">Object Browser</h2>
         <div class="thumbnail-container" id="3d-models"></div>
         <div id="interactive-viewer"></div>
         <div id="info-box">
