@@ -27,50 +27,47 @@
   .thumbnail-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  gap: 0px;
   max-height: 400px;
   overflow-y: auto;
 }
 
 .thumbnail-container .viewer {
   width: 100%;
-  height: 200px; /* 适当设置高度 */
+  aspect-ratio: 1; /* 强制保持正方形比例 */
   background: #ccc; /* 灰色背景 */
+  position: relative;
+  border: 2px solid transparent;
+  transition: border-color 0.3s;
+}
+
+.thumbnail-container .viewer.selected {
+  border-color: black;
+}
+
+#interactive-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+#interactive-viewer, #info-box {
+  width: 50%;
+  aspect-ratio: 1; /* 强制保持正方形比例 */
+  background: #ccc;
+  margin: 20px 0; /* 顶部和底部的间距 */
+  float: left; /* 左对齐 */
   position: relative;
 }
 
+#info-box {
+  background: #f0f0f0; /* 更浅的背景颜色区分内容 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
 
-  #3d-viewer {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    }
-
-  #viewer {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #000;
-    }
-
-  #close-viewer {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    padding: 10px 20px;
-    background: #fff;
-    border: none;
-    cursor: pointer;
-  }
   </style>
   <link rel="stylesheet" href="./files/bulma.min.css">
   <link rel="stylesheet" href="./files/bulma-carousel.min.css">
@@ -303,152 +300,218 @@ that the outputs of the online network and the target network are consistent.
     <!-- Abstract. -->
     <div class="columns is-centered has-text-centered">
       <div class="column is-two-thirds">
-        <h2 class="title is-2">Object</h2>
-        <div class="thumbnail-container" id="3d-models">
-        </div>
-          <div id="3d-viewer" style="display: none;">
-              <button onclick="closeViewer()">Close</button>
-              <div id="viewer"></div>
-          </div>
-        </div>
-          <script type="importmap">
-              {
-                  "imports": {
-                      "three": "https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js",
-                      "OrbitControls": "https://cdn.jsdelivr.net/npm/three@0.150.1/examples/jsm/controls/OrbitControls.js",
-                      "OBJLoader": "https://cdn.jsdelivr.net/npm/three@0.150.1/examples/jsm/loaders/OBJLoader.js",
-                      "MTLLoader": "https://cdn.jsdelivr.net/npm/three@0.150.1/examples/jsm/loaders/MTLLoader.js"
-                  }
-              }
-          </script>
-      
-          <script type="module">
-              import * as THREE from 'three';
-              import { OrbitControls } from 'OrbitControls';
-              import { OBJLoader } from 'OBJLoader';
-              import { MTLLoader } from 'MTLLoader';
-      
-              document.addEventListener("DOMContentLoaded", function () {
-                  const models = [
-                      "harmmer", "harmmer1", "harmmer2", "harmmer3", "harmmer4",
-                      // Add other model names
-                  ];
-      
-                  const container = document.getElementById("3d-models");
-      
-                  models.forEach((model) => {
-                      // const thumbnail = document.createElement("img");
-                      // thumbnail.src = `files/obj/${model}/texture_diffuse.png`; // Use the model's texture as thumbnail
-                      // thumbnail.alt = model;
-                      // thumbnail.onerror = function() {
-                      //     console.error(`Failed to load image: files/obj/${model}/texture_diffuse.png`);
-                      // };
-                      // thumbnail.addEventListener("click", () => openViewer(model));
-                      // container.appendChild(thumbnail);
-
-                      const viewerDiv = document.createElement("div");
-                      viewerDiv.className = "viewer";
-                      container.appendChild(viewerDiv);
-                      loadModel(model, viewerDiv);
-                  });
-              });
-      
-              window.openViewer = function(model) {
-                  document.getElementById("3d-viewer").style.display = "flex";
-                  loadModel(model);
-              };
-      
-              window.closeViewer = function() {
-                  document.getElementById("3d-viewer").style.display = "none";
-                  const viewer = document.getElementById("viewer");
-                  while (viewer.firstChild) {
-                      viewer.removeChild(viewer.firstChild);
-                  }
-              };
-      
-              function loadModel(model, viewer) {
-                  // const viewer = document.getElementById("viewer");
-      
-                  // Debug: Clear the console for each load
-                  console.clear();
-      
-                  // Set up scene, camera, and renderer
-                  const scene = new THREE.Scene();
-                  const camera = new THREE.PerspectiveCamera(50, viewer.offsetWidth / viewer.offsetHeight, 0.1, 1000);
-                  const renderer = new THREE.WebGLRenderer({ antialias: true });
-                  renderer.setSize(viewer.offsetWidth, viewer.offsetHeight);
-                  viewer.appendChild(renderer.domElement);
-
-                  renderer.setClearColor(0xCCCCCC);
-                  
-                  // Set up controls
-                  // const controls = new OrbitControls(camera, renderer.domElement);
-                  // controls.enableDamping = false;
-                  // controls.dampingFactor = 0.25;
-                  // controls.screenSpacePanning = false;
-                  // controls.minDistance = 1;
-                  // controls.maxDistance = 1000;
-      
-                  // Add ambient light
-                  const ambientLight = new THREE.AmbientLight(0x404040, 5);
-                  scene.add(ambientLight);
-      
-                  // Add directional light
-                  const directionalLight = new THREE.DirectionalLight(0xffffff, 5);
-                  directionalLight.position.set(0, 1, 1).normalize();
-                  scene.add(directionalLight);
-      
-                  // Load OBJ and MTL files
-                  
-                  const mtlLoader = new MTLLoader();
-                  mtlLoader.setPath(`files/obj/${model}/`);
-                  mtlLoader.load('base.mtl', (materials) => {
-                      materials.preload();
-                      console.log(materials);
-                      const objLoader = new OBJLoader();
-                      objLoader.setMaterials(materials);
-                      objLoader.setPath(`files/obj/${model}/`);
-                      objLoader.load('textured.obj', function (object) {
-                          scene.add(object);
-                          object.position.set(0, -0.5, 0);
-                          object.scale.set(0.5, 0.5, 0.5);
-      
-                          // Debug: Log object and scene
-                          console.log("Object loaded:", object);
-                          console.log("Scene:", scene);
-      
-                          // Center the camera on the loaded object
-                          const box = new THREE.Box3().setFromObject(object);
-                          const center = box.getCenter(new THREE.Vector3());
-                          // controls.target.copy(center);
-                          camera.position.copy(center).add(new THREE.Vector3(0, 1, 2));
-                          camera.lookAt(center);
-      
-                          // Render the scene
-                          // renderer.render(scene, camera);
-                                            // Animate function
-                          function animate() {
-                              requestAnimationFrame(animate);
-                              // controls.update();
-                              object.rotation.y += 0.01; // 自转
-                              renderer.render(scene, camera);
-                          }
-                          animate();
-                      }, undefined, function (error) {
-                          console.error(`Error loading OBJ file: ${error}`);
-                      });
-                  }, undefined, function (error) {
-                      console.error(`Error loading MTL file: ${error}`);
-                  });
-      
-
-              }
-          </script>
+        <h2 class="title is-2">Object Browse</h2>
+        <div class="thumbnail-container" id="3d-models"></div>
+        <div id="interactive-viewer"></div>
+        <div id="info-box">
+          <p>预设信息展示区域</p>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js",
+      "OrbitControls": "https://cdn.jsdelivr.net/npm/three@0.150.1/examples/jsm/controls/OrbitControls.js",
+      "OBJLoader": "https://cdn.jsdelivr.net/npm/three@0.150.1/examples/jsm/loaders/OBJLoader.js",
+      "MTLLoader": "https://cdn.jsdelivr.net/npm/three@0.150.1/examples/jsm/loaders/MTLLoader.js"
+    }
+  }
+</script>
+
+<script type="module">
+  import * as THREE from 'three';
+  import { OrbitControls } from 'OrbitControls';
+  import { OBJLoader } from 'OBJLoader';
+  import { MTLLoader } from 'MTLLoader';
+
+  document.addEventListener("DOMContentLoaded", function () {
+  const models = [
+    "harmmer", "cup", "cola",
+    // Add other model names
+  ];
+
+  const scalesize = [
+    "1", "1", "0.4",
+  ]
+  const container = document.getElementById("3d-models");
+  const interactiveViewer = document.getElementById("interactive-viewer");
+  const infoBox = document.getElementById("info-box"); // 确保正确引用infoBox
+
+  let currentModel = models[0];
+  // var currentindex = 0;
+  let interactiveRenderer = null; // 用于存储交互查看器的渲染器
+  
+  models.forEach((model, index) => {
+    const viewerDiv = document.createElement("div");
+    viewerDiv.className = "viewer";
+    viewerDiv.dataset.model = model;
+    viewerDiv.addEventListener("click", () => updateInteractiveViewer(model, index, viewerDiv));
+    container.appendChild(viewerDiv);
+    loadModel(model, index, viewerDiv);
+
+    // Select the first model by default
+    if (index === 0) {
+      viewerDiv.classList.add("selected");
+      loadInteractiveModel(model, index, interactiveViewer);
+      updateInfoBox(model, index); // 初始化时更新信息框
+    }
+  });
+
+  function updateInteractiveViewer(model, index, selectedViewer) {
+    currentModel = model;
+    const previousSelected = container.querySelector(".viewer.selected");
+    if (previousSelected) {
+      previousSelected.classList.remove("selected");
+    }
+    selectedViewer.classList.add("selected");
+    loadInteractiveModel(model, index, interactiveViewer);
+    updateInfoBox(model, index); // 初始化时更新信息框
+  }
+
+  function updateInfoBox(model) {
+    infoBox.innerHTML = `<p>Model: ${model} <br> Size: (H, W, L) <br> Real Object Purchase Link: <a href="https://tianxingchen.github.io">link</a> <br> Files Download link: <a href="https: //tianxingchen.github.io">link</a> </p>`;
+  }
+
+  function loadModel(model, index, viewer) {
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, viewer.offsetWidth / viewer.offsetHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(viewer.offsetWidth, viewer.offsetHeight);
+    viewer.appendChild(renderer.domElement);
+
+    renderer.setClearColor(0xCCCCCC);
+
+    const ambientLight = new THREE.AmbientLight(0x404040, 8);
+    scene.add(ambientLight);
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 8);
+    directionalLight.position.set(0, 1, 1).normalize();
+    scene.add(directionalLight);
+
+    const mtlLoader = new MTLLoader();
+    mtlLoader.setPath(`files/obj/${model}/`);
+    mtlLoader.load('base.mtl', (materials) => {
+      materials.preload();
+      const objLoader = new OBJLoader();
+      objLoader.setMaterials(materials);
+      objLoader.setPath(`files/obj/${model}/`);
+      objLoader.load('base.obj', function (object) {
+        scene.add(object);
+        object.position.set(0, 0, 0); // 确保模型位于视图中心
+        // object.scale.set(0.5, 0.5, 0.5);
+
+        const box = new THREE.Box3().setFromObject(object);
+        const center = box.getCenter(new THREE.Vector3());
+        const size = box.getSize(new THREE.Vector3());
+        
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const scale = 1 / maxDim;
+        object.scale.set(scalesize[index], scalesize[index], scalesize[index]);
+
+        // camera.position.set(center.x, center.y, size.z * 2); // 调整相机位置
+        camera.position.set(center.x, center.y + size.z * 2, size.z  * 2);
+        camera.lookAt(center);
+
+        function animate() {
+          requestAnimationFrame(animate);
+          object.rotation.y += 0.01; // 自转
+          renderer.render(scene, camera);
+        }
+        animate();
+      }, undefined, function (error) {
+        console.error(`Error loading OBJ file: ${error}`);
+      });
+    }, undefined, function (error) {
+      console.error(`Error loading MTL file: ${error}`);
+    });
+
+    camera.position.z = 2;
+  }
+
+  function loadInteractiveModel(model, index, viewer) {
+    while (viewer.firstChild) {
+      viewer.removeChild(viewer.firstChild);
+    }
+
+    // 清理旧的WebGL上下文
+    if (interactiveRenderer) {
+      interactiveRenderer.dispose();
+      interactiveRenderer.forceContextLoss();
+      interactiveRenderer = null;
+    }
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, viewer.offsetWidth / viewer.offsetHeight, 0.1, 1000);
+    interactiveRenderer = new THREE.WebGLRenderer({ antialias: true });
+    interactiveRenderer.setSize(viewer.offsetWidth, viewer.offsetHeight);
+    viewer.appendChild(interactiveRenderer.domElement);
+
+    interactiveRenderer.setClearColor(0xCCCCCC);
+
+    const controls = new OrbitControls(camera, interactiveRenderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.25;
+    controls.screenSpacePanning = false;
+    controls.minDistance = 1;
+    controls.maxDistance = 1000;
+
+    const ambientLight = new THREE.AmbientLight(0x404040, 8);
+    scene.add(ambientLight);
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 8);
+    directionalLight.position.set(0, 1, 1).normalize();
+    scene.add(directionalLight);
+
+    const mtlLoader = new MTLLoader();
+    mtlLoader.setPath(`files/obj/${model}/`);
+    mtlLoader.load('base.mtl', (materials) => {
+      materials.preload();
+      const objLoader = new OBJLoader();
+      objLoader.setMaterials(materials);
+      objLoader.setPath(`files/obj/${model}/`);
+      objLoader.load('base.obj', function (object) {
+        scene.add(object);
+        object.position.set(0, 0, 0); // 确保模型位于视图中心
+        // object.scale.set(0.5, 0.5, 0.5);
+
+        const box = new THREE.Box3().setFromObject(object);
+        const center = box.getCenter(new THREE.Vector3());
+        const size = box.getSize(new THREE.Vector3());
+
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const scale = 1 / maxDim;
+        object.scale.set(scalesize[index], scalesize[index], scalesize[index]);
+
+        camera.position.set(center.x, center.y, size.z * 2); // 调整相机位置
+        camera.lookAt(center);
+
+        function animate() {
+          requestAnimationFrame(animate);
+          controls.update();
+          directionalLight.position.copy(camera.position).add(new THREE.Vector3(0, 1, 1));
+          interactiveRenderer.render(scene, camera);
+        }
+        animate();
+      }, undefined, function (error) {
+        console.error(`Error loading OBJ file: ${error}`);
+      });
+    }, undefined, function (error) {
+      console.error(`Error loading MTL file: ${error}`);
+    });
+
+    camera.position.z = 2;
+  }
+});
+
+
+
+</script>
+
+
 
 <section class="section" style="margin-top: -60px">
   <div class="container">
