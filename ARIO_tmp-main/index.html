@@ -390,11 +390,11 @@ that the outputs of the online network and the target network are consistent.
                   // controls.maxDistance = 1000;
       
                   // Add ambient light
-                  const ambientLight = new THREE.AmbientLight(0x404040, 2);
+                  const ambientLight = new THREE.AmbientLight(0x404040, 5);
                   scene.add(ambientLight);
       
                   // Add directional light
-                  const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
+                  const directionalLight = new THREE.DirectionalLight(0xffffff, 5);
                   directionalLight.position.set(0, 1, 1).normalize();
                   scene.add(directionalLight);
       
