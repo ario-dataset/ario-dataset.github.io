@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="description" content="ManiCM: Real-time 3D Diffusion Policy via Consistency Model for Robotic Manipulation">
+  <meta name="keywords" content="Robotics, Mobile Manipulation, Consistency Model">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ManiCM</title>
+
+  <style>
+  .video-container {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr); /* 8列 */
+    grid-template-rows: repeat(4, auto); /* 4行，高度根据内容自动调整 */
+    gap: 10px; /* 网格项之间的间隙 */
+    width: 100%; /* 容器宽度，可根据需要调整 */
+    margin: auto; /* 居中显示 */
+    padding: 5px; /* 容器内边距 */
+    border: 2px dashed #333; /* 虚线边框 */
+    box-sizing: border-box; /* 边框计算在宽度内 */
+  }
+  .video-item {
+    width: 100%; /* 视频宽度 */
+    height: auto; /* 视频高度自适应 */
+    display: block; /* 显示视频 */
+  }
+  .thumbnail-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.thumbnail-container .viewer {
+  width: 100%;
+  height: 200px; /* 适当设置高度 */
+  background: #ccc; /* 灰色背景 */
+  position: relative;
+}
+
+
+  #3d-viewer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+  #viewer {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+    }
+
+  #close-viewer {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  </style>
+  <link rel="stylesheet" href="./files/bulma.min.css">
+  <link rel="stylesheet" href="./files/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./files/bulma-slider.min.css">
+  <link rel="stylesheet" href="./files/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./files/index.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+
+  <script type="text/javascript" id="www-widgetapi-script" src="./files/www-widgetapi.js" async=""></script><script src="./files/jquery.min.js"></script>
+  <script defer="" src="./files/fontawesome.all.min.js"></script>
+  <script src="./files/bulma-carousel.min.js"></script>
+  <script src="./files/bulma-slider.min.js"></script>
+  <script src="./files/index.js"></script>
+  <!-- <script src="./files/js/three.module.js"></script>
+  <script src="./files/js/three.module.min.js"></script>
+  <script src="./files/js/MTLLoader.js"></script>
+  <script src="./files/js/OBJLoader.js"></script>
+  <script src="./files/js/OrbitControls.js"></script> -->
+
+  <link rel="icon" href="./files/icon.jpg">
+
+  <script src="./files/iframe_api"></script>
+</head>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-two-thirds is-centered has-text-centered">
+          <h1 class="title is-1 publication-title">ManiCM</h1>
+          <h2 class="subtitle is-2 publication-subtitle">Real-time 3D Diffusion Policy via Consistency Model for Robotic Manipulation</h2>
+          <div class="is-size-4 publication-authors">
+            <span class="author-block">
+              <a href="https://guanxinglu.github.io/">Guanxing Lu</a><sup>1</sup>*&nbsp;&nbsp;&nbsp;
+              <a>Zifeng Gao</a><sup>1</sup>*&nbsp;&nbsp;&nbsp;
+              <a href="https://tianxingchen.github.io">Tianxing Chen</a><sup>2</sup>&nbsp;&nbsp;&nbsp;
+              <a href="https://github.com/Dai-Wenxun">Wenxun Dai</a><sup>2</sup>&nbsp;&nbsp;&nbsp;<br>
+              <a href="https://ziweiwangthu.github.io/">Ziwei Wang</a><sup>3</sup>&nbsp;&nbsp;&nbsp;and&nbsp;&nbsp;
+              <a href="https://andytang15.github.io/">Yansong Tang</a><sup>1†</sup>
+            </span>
+            <span class="author-block">
+              <sup>1</sup>Tsinghua Shenzhen International Graduate School, Tsinghua University<br>
+              <sup>2</sup>Shanghai AI Laboratory
+              <sup>3</sup>Carnegie Mellon University
+            </span>
+            <p style="font-size: medium; margin-top: 5px;"><sup>*</sup>Equal Contributions, <sup>†</sup>Corresponding author</p>
+          </div>
+        <div style="height: 20px;"></div>
+        <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fmanicm-fast.github.io&count_bg=%23953FB2&title_bg=%2340DFB3&icon=&icon_color=%23E7E7E7&title=ManiCM+Page+Viewers&edge_flat=false"/></a>
+        <body data-new-gr-c-s-check-loaded="14.1176.0" data-gr-ext-installed="">
+        <div style="height: 20px;"></div>
+          <div>
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2406.01586" class="external-link button is-normal is-rounded is-dark" target="_blank">
+                  <span class="icon">
+                      <svg class="svg-inline--fa fa-file-pdf fa-w-12" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file-pdf" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 62.9-21.9-12.7-9.6-24.9-23.4-34.5-40.8zM86.1 428.1c0 .8 13.2-5.4 34.9-40.2-6.7 6.3-29.1 24.5-34.9 40.2zM248 160h136v328c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V24C0 10.7 10.7 0 24 0h200v136c0 13.2 10.8 24 24 24zm-8 171.8c-20-12.2-33.3-29-42.7-53.8 4.5-18.5 11.6-46.6 6.2-64.2-4.7-29.4-42.4-26.5-47.8-6.8-5 18.3-.4 44.1 8.1 77-11.6 27.6-28.7 64.6-40.8 85.8-.1 0-.1.1-.2.1-27.1 13.9-73.6 44.5-54.5 68 5.6 6.9 16 10 21.5 10 17.9 0 35.7-18 61.1-61.8 25.8-8.5 54.1-19.1 79-23.2 21.7 11.8 47.1 19.5 64 19.5 29.2 0 31.2-32 19.7-43.4-13.9-13.6-54.3-9.7-73.6-7.2zM377 105L279 7c-4.5-4.5-10.6-7-17-7h-6v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-74.1 255.3c4.1-2.7-2.5-11.9-42.8-9 37.1 15.8 42.8 9 42.8 9z"></path></svg><!-- <i class="fas fa-file-pdf"></i> Font Awesome fontawesome.com -->
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- arXiv Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2406.01586" class="external-link button is-normal is-rounded is-dark" target="_blank">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/ManiCM-fast/ManiCM" class="external-link button is-normal is-rounded is-dark" target="_blank">
+                  <span class="icon">
+                      <svg class="svg-inline--fa fa-github fa-w-16" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" data-fa-i2svg=""><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg><!-- <i class="fab fa-github"></i> Font Awesome fontawesome.com -->
+                  </span>
+                  <span>Code</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="margin-top: -60px">
+  <div class="container">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-two-thirds">
+        <h2 class="title is-2">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Diffusion models have been verified to be effective in generating complex distributions from natural images to motion trajectories. Recent diffusion-based methods show impressive performance in 3D robotic manipulation tasks, whereas they suffer from severe runtime inefficiency due to multiple denoising steps, especially with high-dimensional observations. To this end, we propose a real-time robotic manipulation model named <b>ManiCM</b> that imposes the consistency constraint to the diffusion process, so that the model can generate robot actions in only one-step inference.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<section class="section" style="margin-top: -60px">
+  <div class="container">
+    <h2 class="title is-2" style="text-align: center;">Framework of ManiCM</h2>
+
+    <div style="text-align: center; margin-top: 20px;">
+      <img src="./files/2024-ManiCM.png" style="width: 50%">
+    </div>
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-two-thirds">
+        <div class="content has-text-justified">
+          <p>
+            Given a raw action sequence a<sub>0</sub>, we first perform a forward diffusion to introduce
+noise over n + k steps. The resulting noisy sequence a<sub>n+k</sub> is then fed into both the online network and the
+teacher network to predict the clean action sequence. The target network uses the teacher network’s k-step
+estimation results to predict the action sequence. To enforce self-consistency, a loss function is applied to ensure
+that the outputs of the online network and the target network are consistent.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+</section>
+
+
+<section class="section" style="margin-top: -60px">
+  <div class="container">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-two-thirds">
+        <h2 class="title is-2">Results</h2>
+      </div>
+    </div>
+
+
+  
+  
+  <div class="container">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-two-thirds">
+        <div class="content has-text-justified" style="font-size: larger; font-weight: 800">
+          31 tasks (Adroit and MetaWorld)
+        </div>
+        <div class="video-container" id="videoContainer">
+          <!-- 视频标签将通过JavaScript动态添加 -->
+        </div>
+        <script>
+          // // 获取视频容器
+          // var container = document.getElementById('videoContainer');
+        
+          // // 函数用于创建视频元素并添加到容器
+          // function createVideoElement(index) {
+          //   var video = document.createElement('video');
+          //   video.className = 'video-item';
+          //   video.setAttribute('controls', '');
+          //   video.setAttribute('autoplay', '');
+          //   video.setAttribute('loop', '');
+          //   video.muted = true; // 静音自动播放
+        
+          //   var source = document.createElement('source');
+          //   source.src = 'videos/' + index + '.mp4';
+          //   source.type = 'video/mp4';
+        
+          //   video.appendChild(source);
+        
+          //   // 视频加载完成后自动播放
+          //   video.addEventListener('loadedmetadata', function() {
+          //     video.style.display = 'block'; // 显示视频
+          //     video.play(); // 播放视频
+          //   });
+        
+          //   return video;
+          // }
+        
+          // // 动态创建并添加32个视频到页面
+          // for (var i = 1; i <= 32; i++) {
+          //   container.appendChild(createVideoElement(i));
+          // }
+        </script>
+        <div class="content has-text-justified" style="margin-top: 10px">
+          We conduct our experiments in the well-recognized MetaWorld and Adroit benchmarks, resulting in a total of 31 tasks. These tasks range from simple pick-and-place tasks to more challenging scenarios such as dexterous manipulation, which ensure that the model is effective across various scenarios.
+        </div>
+      </div>
+    </div>
+  <div class="container">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-two-thirds">
+        <div class="content has-text-justified" style="font-size: larger; font-weight: 800">
+          Comparisons on Runtime
+        </div>
+        <div style="text-align: center; margin-top: 20px;">
+          <img src="./files/result1.jpg" style="width: 80%">
+        </div>
+        <div class="content has-text-justified">
+          We evaluate 100 episodes on 31 challenging tasks from Adroit and Metaworld across 3 random seeds and report the time consumption per step (s) with standard deviation. The second results are underlined and the best results are bold. ‘∗’ denotes the reproduced version. The performance of our ManiCM in one-step inference surpasses all state-of-the-art models, providing ample evidence for the effectiveness of consistency distillation.
+        </div>
+      </div>
+    </div>
+  <div class="container">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-two-thirds">
+        <div class="content has-text-justified" style="font-size: larger; font-weight: 800">
+          Comparisons on Success Rate
+        </div>
+        <div style="text-align: center; margin-top: 20px;">
+          <img src="./files/result2.jpg" style="width: 80%">
+        </div>
+        <div class="content has-text-justified">
+          We evaluate 100 episodes on 31 challenging tasks from Adroit and Metaworld across 3 random seeds and report the success rates (%) with standard deviation. The second results are underlined and the best results are bold. ‘∗’ denotes the reproduced version. The performance of our ManiCM in one-step inference surpasses all state-of-the-art models, providing ample evidence for the effectiveness of consistency distillation.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" style="margin-top: -60px">
+  <div class="container">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-two-thirds">
+        <h2 class="title is-2">Object</h2>
+        <div class="thumbnail-container" id="3d-models">
+        </div>
+          <div id="3d-viewer" style="display: none;">
+              <button onclick="closeViewer()">Close</button>
+              <div id="viewer"></div>
+          </div>
+        </div>
+          <script type="importmap">
+              {
+                  "imports": {
+                      "three": "https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js",
+                      "OrbitControls": "https://cdn.jsdelivr.net/npm/three@0.150.1/examples/jsm/controls/OrbitControls.js",
+                      "OBJLoader": "https://cdn.jsdelivr.net/npm/three@0.150.1/examples/jsm/loaders/OBJLoader.js",
+                      "MTLLoader": "https://cdn.jsdelivr.net/npm/three@0.150.1/examples/jsm/loaders/MTLLoader.js"
+                  }
+              }
+          </script>
+      
+          <script type="module">
+              import * as THREE from 'three';
+              import { OrbitControls } from 'OrbitControls';
+              import { OBJLoader } from 'OBJLoader';
+              import { MTLLoader } from 'MTLLoader';
+      
+              document.addEventListener("DOMContentLoaded", function () {
+                  const models = [
+                      "harmmer", "harmmer1", "harmmer2", "harmmer3", "harmmer4",
+                      // Add other model names
+                  ];
+      
+                  const container = document.getElementById("3d-models");
+      
+                  models.forEach((model) => {
+                      // const thumbnail = document.createElement("img");
+                      // thumbnail.src = `files/obj/${model}/texture_diffuse.png`; // Use the model's texture as thumbnail
+                      // thumbnail.alt = model;
+                      // thumbnail.onerror = function() {
+                      //     console.error(`Failed to load image: files/obj/${model}/texture_diffuse.png`);
+                      // };
+                      // thumbnail.addEventListener("click", () => openViewer(model));
+                      // container.appendChild(thumbnail);
+
+                      const viewerDiv = document.createElement("div");
+                      viewerDiv.className = "viewer";
+                      container.appendChild(viewerDiv);
+                      loadModel(model, viewerDiv);
+                  });
+              });
+      
+              window.openViewer = function(model) {
+                  document.getElementById("3d-viewer").style.display = "flex";
+                  loadModel(model);
+              };
+      
+              window.closeViewer = function() {
+                  document.getElementById("3d-viewer").style.display = "none";
+                  const viewer = document.getElementById("viewer");
+                  while (viewer.firstChild) {
+                      viewer.removeChild(viewer.firstChild);
+                  }
+              };
+      
+              function loadModel(model, viewer) {
+                  // const viewer = document.getElementById("viewer");
+      
+                  // Debug: Clear the console for each load
+                  console.clear();
+      
+                  // Set up scene, camera, and renderer
+                  const scene = new THREE.Scene();
+                  const camera = new THREE.PerspectiveCamera(50, viewer.offsetWidth / viewer.offsetHeight, 0.1, 1000);
+                  const renderer = new THREE.WebGLRenderer({ antialias: true });
+                  renderer.setSize(viewer.offsetWidth, viewer.offsetHeight);
+                  viewer.appendChild(renderer.domElement);
+
+                  renderer.setClearColor(0xCCCCCC);
+                  
+                  // Set up controls
+                  // const controls = new OrbitControls(camera, renderer.domElement);
+                  // controls.enableDamping = false;
+                  // controls.dampingFactor = 0.25;
+                  // controls.screenSpacePanning = false;
+                  // controls.minDistance = 1;
+                  // controls.maxDistance = 1000;
+      
+                  // Add ambient light
+                  const ambientLight = new THREE.AmbientLight(0x404040);
+                  scene.add(ambientLight);
+      
+                  // Add directional light
+                  const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+                  directionalLight.position.set(0, 1, 1).normalize();
+                  scene.add(directionalLight);
+      
+                  // Load OBJ and MTL files
+                  
+                  const mtlLoader = new MTLLoader();
+                  mtlLoader.resourcePath = './files/obj/harmmer/';
+                  mtlLoader.path = './files/obj/harmmer/';
+                  // mtlLoader.setPath(`files/obj/${model}/`);
+                  mtlLoader.load('base.mtl', (materials) => {
+                      materials.preload();
+                      console.log(materials);
+                      const objLoader = new OBJLoader();
+                      objLoader.setMaterials(materials);
+                      objLoader.setPath(`files/obj/${model}/`);
+                      objLoader.load('textured.obj', function (object) {
+                          scene.add(object);
+                          object.position.set(0, -0.5, 0);
+                          object.scale.set(0.5, 0.5, 0.5);
+      
+                          // Debug: Log object and scene
+                          console.log("Object loaded:", object);
+                          console.log("Scene:", scene);
+      
+                          // Center the camera on the loaded object
+                          const box = new THREE.Box3().setFromObject(object);
+                          const center = box.getCenter(new THREE.Vector3());
+                          // controls.target.copy(center);
+                          camera.position.copy(center).add(new THREE.Vector3(0, 1, 2));
+                          camera.lookAt(center);
+      
+                          // Render the scene
+                          // renderer.render(scene, camera);
+                                            // Animate function
+                          function animate() {
+                              requestAnimationFrame(animate);
+                              // controls.update();
+                              object.rotation.y += 0.01; // 自转
+                              renderer.render(scene, camera);
+                          }
+                          animate();
+                      }, undefined, function (error) {
+                          console.error(`Error loading OBJ file: ${error}`);
+                      });
+                  }, undefined, function (error) {
+                      console.error(`Error loading MTL file: ${error}`);
+                  });
+      
+
+              }
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="margin-top: -60px">
+  <div class="container">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-two-thirds">
+        <h2 class="title is-2">Acknowledgements</h2>
+        <div class="content has-text-justified">
+          <p>
+            The author team would like to acknowledge <a href="https://liang-zx.github.io/">Zhixuan Liang </a>and <a href="https://yaomarkmu.github.io/">Yao Mu</a> from the University of Hong Kong for their helpful technical discussion and suggestions.<br><br>
+
+              Our code is built upon 
+              <a href="https://github.com/YanjieZe/3D-Diffusion-Policy" target="_blank">3D Diffusion Policy</a>, 
+              <a href="https://github.com/Dai-Wenxun/MotionLCM" target="_blank">MotionLCM</a>, 
+              <a href="https://github.com/luosiallen/latent-consistency-model" target="_blank">Latent Consistency Model</a>, 
+              <a href="https://github.com/real-stanford/diffusion_policy" target="_blank">Diffusion Policy</a>, 
+              <a href="https://github.com/microsoft/VRL3" target="_blank">VRL3</a>, 
+              <a href="https://github.com/Farama-Foundation/Metaworld" target="_blank">Metaworld</a>, 
+              and 
+              <a href="https://github.com/GuanxingLu/ManiGaussian" target="_blank">ManiGaussian</a>. 
+              We would like to thank the authors for their excellent works.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX" style="margin-top: -60px">
+  <div class="container content">
+    <h2 class="titile">BibTeX</h2>
+    <pre><code>@article{lu2024manicm,
+      title={ManiCM: Real-time 3D Diffusion Policy via Consistency Model for Robotic Manipulation}, 
+      author={Guanxing Lu and Zifeng Gao and Tianxing Chen and Wenxun Dai and Ziwei Wang and Yansong Tang},
+      journal={arXiv preprint arXiv:2406.01586},
+      year={2024}
+}</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <p>Page template borrowed from <a href="https://nerfies.github.io/"><span class="dnerf">Nerfies</span></a> and <a href="https://robot-parkour.github.io/"><span class="dnerf">Robot-Parkour</span></a>.</p>
+    </div>
+  </div>
+</footer>
