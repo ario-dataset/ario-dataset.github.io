@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="description" content="???">
+  <meta name="keywords" content="Robotics, Mobile Manipulation, Consistency Model">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yao Mark Mu</title>
+
+  <style>
+  .video-container {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr); /* 8列 */
+    grid-template-rows: repeat(4, auto); /* 4行，高度根据内容自动调整 */
+    gap: 10px; /* 网格项之间的间隙 */
+    width: 100%; /* 容器宽度，可根据需要调整 */
+    margin: auto; /* 居中显示 */
+    padding: 5px; /* 容器内边距 */
+    border: 2px dashed #333; /* 虚线边框 */
+    box-sizing: border-box; /* 边框计算在宽度内 */
+  }
+  .video-item {
+    width: 100%; /* 视频宽度 */
+    height: auto; /* 视频高度自适应 */
+    display: block; /* 显示视频 */
+  }
+  .thumbnail-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.thumbnail-container .viewer {
+  width: 100%;
+  aspect-ratio: 1; /* 强制保持正方形比例 */
+  background: #ccc; /* 灰色背景 */
+  position: relative;
+  border: 2px solid transparent;
+  transition: border-color 0.3s;
+}
+
+.thumbnail-container .viewer.selected {
+  border-color: black;
+}
+
+#interactive-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+#interactive-viewer, #info-box {
+  width: 50%;
+  aspect-ratio: 1; /* 强制保持正方形比例 */
+  background: #ccc;
+  margin: 20px 0; /* 顶部和底部的间距 */
+  float: left; /* 左对齐 */
+  position: relative;
+}
+
+#info-box {
+  background: #f0f0f0; /* 更浅的背景颜色区分内容 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+  </style>
+  <link rel="stylesheet" href="./files/bulma.min.css">
+  <link rel="stylesheet" href="./files/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./files/bulma-slider.min.css">
+  <link rel="stylesheet" href="./files/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./files/index.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+
+  <script type="text/javascript" id="www-widgetapi-script" src="./files/www-widgetapi.js" async=""></script><script src="./files/jquery.min.js"></script>
+  <script defer="" src="./files/fontawesome.all.min.js"></script>
+  <script src="./files/bulma-carousel.min.js"></script>
+  <script src="./files/bulma-slider.min.js"></script>
+  <script src="./files/index.js"></script>
+  <!-- <script src="./files/js/three.module.js"></script>
+  <script src="./files/js/three.module.min.js"></script>
+  <script src="./files/js/MTLLoader.js"></script>
+  <script src="./files/js/OBJLoader.js"></script>
+  <script src="./files/js/OrbitControls.js"></script> -->
+
+  <link rel="icon" href="./files/icon.jpg">
+
+  <script src="./files/iframe_api"></script>
+</head>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-two-thirds is-centered has-text-centered">
+          <h1 class="title is-1 publication-title">Yao Mark Mu</h1>
+          <h2 class="subtitle is-2 publication-subtitle">Yao Mark Mu</h2>
+          <div class="is-size-4 publication-authors">
+            <span class="author-block">
+              <a href="https://tianxingchen.github.io">Tianxing Chen</a><sup>2</sup>&nbsp;&nbsp;&nbsp;
+            </span>
+            <br>
+            <span class="author-block">
+              <!-- <sup>1</sup>Tsinghua Shenzhen International Graduate School, Tsinghua University<br> -->
+              China
+            </span>
+            <p style="font-size: medium; margin-top: 5px;"><sup>*</sup>Equal Contributions, <sup>†</sup>Corresponding author</p>
+          </div>
+        <div style="height: 20px;"></div>
+        <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fmanicm-fast.github.io&count_bg=%23953FB2&title_bg=%2340DFB3&icon=&icon_color=%23E7E7E7&title=ManiCM+Page+Viewers&edge_flat=false"/></a>
+        <body data-new-gr-c-s-check-loaded="14.1176.0" data-gr-ext-installed="">
+        <div style="height: 20px;"></div>
+          <div>
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2406.01586" class="external-link button is-normal is-rounded is-dark" target="_blank">
+                  <span class="icon">
+                      <svg class="svg-inline--fa fa-file-pdf fa-w-12" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file-pdf" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 62.9-21.9-12.7-9.6-24.9-23.4-34.5-40.8zM86.1 428.1c0 .8 13.2-5.4 34.9-40.2-6.7 6.3-29.1 24.5-34.9 40.2zM248 160h136v328c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V24C0 10.7 10.7 0 24 0h200v136c0 13.2 10.8 24 24 24zm-8 171.8c-20-12.2-33.3-29-42.7-53.8 4.5-18.5 11.6-46.6 6.2-64.2-4.7-29.4-42.4-26.5-47.8-6.8-5 18.3-.4 44.1 8.1 77-11.6 27.6-28.7 64.6-40.8 85.8-.1 0-.1.1-.2.1-27.1 13.9-73.6 44.5-54.5 68 5.6 6.9 16 10 21.5 10 17.9 0 35.7-18 61.1-61.8 25.8-8.5 54.1-19.1 79-23.2 21.7 11.8 47.1 19.5 64 19.5 29.2 0 31.2-32 19.7-43.4-13.9-13.6-54.3-9.7-73.6-7.2zM377 105L279 7c-4.5-4.5-10.6-7-17-7h-6v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-74.1 255.3c4.1-2.7-2.5-11.9-42.8-9 37.1 15.8 42.8 9 42.8 9z"></path></svg><!-- <i class="fas fa-file-pdf"></i> Font Awesome fontawesome.com -->
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- arXiv Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2406.01586" class="external-link button is-normal is-rounded is-dark" target="_blank">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/ManiCM-fast/ManiCM" class="external-link button is-normal is-rounded is-dark" target="_blank">
+                  <span class="icon">
+                      <svg class="svg-inline--fa fa-github fa-w-16" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" data-fa-i2svg=""><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg><!-- <i class="fab fa-github"></i> Font Awesome fontawesome.com -->
+                  </span>
+                  <span>Code</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" style="margin-top: -60px">
+  <div class="container">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-two-thirds">
+        <h2 class="title is-2">Object Browser</h2>
+        <div class="thumbnail-container" id="3d-models"></div>
+        <div id="interactive-viewer"></div>
+        <div id="info-box">
+          <p>预设信息展示区域</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js",
+      "OrbitControls": "https://cdn.jsdelivr.net/npm/three@0.150.1/examples/jsm/controls/OrbitControls.js",
+      "OBJLoader": "https://cdn.jsdelivr.net/npm/three@0.150.1/examples/jsm/loaders/OBJLoader.js",
+      "MTLLoader": "https://cdn.jsdelivr.net/npm/three@0.150.1/examples/jsm/loaders/MTLLoader.js"
+    }
+  }
+</script>
+
+<script type="module">
+  import * as THREE from 'three';
+  import { OrbitControls } from 'OrbitControls';
+  import { OBJLoader } from 'OBJLoader';
+  import { MTLLoader } from 'MTLLoader';
+
+  document.addEventListener("DOMContentLoaded", function () {
+  const models = [
+    "harmmer", "cup", "cola",
+    // Add other model names
+  ];
+
+  const scalesize = [
+    "1", "1", "0.4",
+  ]
+  const container = document.getElementById("3d-models");
+  const interactiveViewer = document.getElementById("interactive-viewer");
+  const infoBox = document.getElementById("info-box"); // 确保正确引用infoBox
+
+  let currentModel = models[0];
+  // var currentindex = 0;
+  let interactiveRenderer = null; // 用于存储交互查看器的渲染器
+  
+  models.forEach((model, index) => {
+    const viewerDiv = document.createElement("div");
+    viewerDiv.className = "viewer";
+    viewerDiv.dataset.model = model;
+    viewerDiv.addEventListener("click", () => updateInteractiveViewer(model, index, viewerDiv));
+    container.appendChild(viewerDiv);
+    loadModel(model, index, viewerDiv);
+
+    // Select the first model by default
+    if (index === 0) {
+      viewerDiv.classList.add("selected");
+      loadInteractiveModel(model, index, interactiveViewer);
+      updateInfoBox(model, index); // 初始化时更新信息框
+    }
+  });
+
+  function updateInteractiveViewer(model, index, selectedViewer) {
+    currentModel = model;
+    const previousSelected = container.querySelector(".viewer.selected");
+    if (previousSelected) {
+      previousSelected.classList.remove("selected");
+    }
+    selectedViewer.classList.add("selected");
+    loadInteractiveModel(model, index, interactiveViewer);
+    updateInfoBox(model, index); // 初始化时更新信息框
+  }
+
+  function updateInfoBox(model) {
+    infoBox.innerHTML = `<p>Model: ${model} <br> Size: (H, W, L) <br> Real Object Purchase Link: <a href="https://tianxingchen.github.io">link</a> <br> Files Download link: <a href="https: //tianxingchen.github.io">link</a> </p>`;
+  }
+
+  function loadModel(model, index, viewer) {
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, viewer.offsetWidth / viewer.offsetHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(viewer.offsetWidth, viewer.offsetHeight);
+    viewer.appendChild(renderer.domElement);
+
+    renderer.setClearColor(0xCCCCCC);
+
+    const ambientLight = new THREE.AmbientLight(0x404040, 8);
+    scene.add(ambientLight);
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 8);
+    directionalLight.position.set(0, 1, 1).normalize();
+    scene.add(directionalLight);
+
+    const mtlLoader = new MTLLoader();
+    mtlLoader.setPath(`files/obj/${model}/`);
+    mtlLoader.load('base.mtl', (materials) => {
+      materials.preload();
+      const objLoader = new OBJLoader();
+      objLoader.setMaterials(materials);
+      objLoader.setPath(`files/obj/${model}/`);
+      objLoader.load('base.obj', function (object) {
+        scene.add(object);
+        object.position.set(0, 0, 0); // 确保模型位于视图中心
+        // object.scale.set(0.5, 0.5, 0.5);
+
+        const box = new THREE.Box3().setFromObject(object);
+        const center = box.getCenter(new THREE.Vector3());
+        const size = box.getSize(new THREE.Vector3());
+        
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const scale = 1 / maxDim;
+        object.scale.set(scalesize[index], scalesize[index], scalesize[index]);
+
+        // camera.position.set(center.x, center.y, size.z * 2); // 调整相机位置
+        camera.position.set(center.x, center.y + size.z * 2, size.z  * 2);
+        camera.lookAt(center);
+
+        function animate() {
+          requestAnimationFrame(animate);
+          object.rotation.y += 0.01; // 自转
+          renderer.render(scene, camera);
+        }
+        animate();
+      }, undefined, function (error) {
+        console.error(`Error loading OBJ file: ${error}`);
+      });
+    }, undefined, function (error) {
+      console.error(`Error loading MTL file: ${error}`);
+    });
+
+    camera.position.z = 2;
+  }
+
+  function loadInteractiveModel(model, index, viewer) {
+    while (viewer.firstChild) {
+      viewer.removeChild(viewer.firstChild);
+    }
+
+    // 清理旧的WebGL上下文
+    if (interactiveRenderer) {
+      interactiveRenderer.dispose();
+      interactiveRenderer.forceContextLoss();
+      interactiveRenderer = null;
+    }
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, viewer.offsetWidth / viewer.offsetHeight, 0.1, 1000);
+    interactiveRenderer = new THREE.WebGLRenderer({ antialias: true });
+    interactiveRenderer.setSize(viewer.offsetWidth, viewer.offsetHeight);
+    viewer.appendChild(interactiveRenderer.domElement);
+
+    interactiveRenderer.setClearColor(0xCCCCCC);
+
+    const controls = new OrbitControls(camera, interactiveRenderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.25;
+    controls.screenSpacePanning = false;
+    controls.minDistance = 1;
+    controls.maxDistance = 1000;
+
+    const ambientLight = new THREE.AmbientLight(0x404040, 8);
+    scene.add(ambientLight);
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 8);
+    directionalLight.position.set(0, 1, 1).normalize();
+    scene.add(directionalLight);
+
+    const mtlLoader = new MTLLoader();
+    mtlLoader.setPath(`files/obj/${model}/`);
+    mtlLoader.load('base.mtl', (materials) => {
+      materials.preload();
+      const objLoader = new OBJLoader();
+      objLoader.setMaterials(materials);
+      objLoader.setPath(`files/obj/${model}/`);
+      objLoader.load('base.obj', function (object) {
+        scene.add(object);
+        object.position.set(0, 0, 0); // 确保模型位于视图中心
+        // object.scale.set(0.5, 0.5, 0.5);
+
+        const box = new THREE.Box3().setFromObject(object);
+        const center = box.getCenter(new THREE.Vector3());
+        const size = box.getSize(new THREE.Vector3());
+
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const scale = 1 / maxDim;
+        object.scale.set(scalesize[index], scalesize[index], scalesize[index]);
+
+        camera.position.set(center.x, center.y, size.z * 2); // 调整相机位置
+        camera.lookAt(center);
+
+        function animate() {
+          requestAnimationFrame(animate);
+          controls.update();
+          directionalLight.position.copy(camera.position).add(new THREE.Vector3(0, 1, 1));
+          interactiveRenderer.render(scene, camera);
+        }
+        animate();
+      }, undefined, function (error) {
+        console.error(`Error loading OBJ file: ${error}`);
+      });
+    }, undefined, function (error) {
+      console.error(`Error loading MTL file: ${error}`);
+    });
+
+    camera.position.z = 2;
+  }
+});
+
+
+
+</script>
+
+
+
+<section class="section" style="margin-top: -60px">
+  <div class="container">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-two-thirds">
+        <h2 class="title is-2">Acknowledgements</h2>
+        <div class="content has-text-justified">
+          <p>
+            The author team would like to acknowledge <a href="https://liang-zx.github.io/">Zhixuan Liang </a>and <a href="https://yaomarkmu.github.io/">Yao Mu</a> from the University of Hong Kong for their helpful technical discussion and suggestions.<br><br>
+
+              Our code is built upon 
+              <a href="https://github.com/YanjieZe/3D-Diffusion-Policy" target="_blank">3D Diffusion Policy</a>, 
+              <a href="https://github.com/Dai-Wenxun/MotionLCM" target="_blank">MotionLCM</a>, 
+              <a href="https://github.com/luosiallen/latent-consistency-model" target="_blank">Latent Consistency Model</a>, 
+              <a href="https://github.com/real-stanford/diffusion_policy" target="_blank">Diffusion Policy</a>, 
+              <a href="https://github.com/microsoft/VRL3" target="_blank">VRL3</a>, 
+              <a href="https://github.com/Farama-Foundation/Metaworld" target="_blank">Metaworld</a>, 
+              and 
+              <a href="https://github.com/GuanxingLu/ManiGaussian" target="_blank">ManiGaussian</a>. 
+              We would like to thank the authors for their excellent works.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX" style="margin-top: -60px">
+  <div class="container content">
+    <h2 class="titile">BibTeX</h2>
+    <pre><code>@article{lu2024manicm,
+      title={ManiCM: Real-time 3D Diffusion Policy via Consistency Model for Robotic Manipulation}, 
+      author={Guanxing Lu and Zifeng Gao and Tianxing Chen and Wenxun Dai and Ziwei Wang and Yansong Tang},
+      journal={arXiv preprint arXiv:2406.01586},
+      year={2024}
+}</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <p>Page template borrowed from <a href="https://nerfies.github.io/"><span class="dnerf">Nerfies</span></a> and <a href="https://robot-parkour.github.io/"><span class="dnerf">Robot-Parkour</span></a>.</p>
+    </div>
+  </div>
+</footer>

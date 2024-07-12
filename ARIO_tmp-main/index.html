@@ -1,421 +1,2014 @@
 <!DOCTYPE html>
-<html lang="en">
+<!-- saved from url=(0024)https://sapien.ucsd.edu/ -->
+<html lang="en" class="" style="">
+
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="description" content="???">
-  <meta name="keywords" content="Robotics, Mobile Manipulation, Consistency Model">
+
+  <meta http-equiv="Cache-Control" content="max-age=0, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>ARIO</title>
+  <!--<base href="/">-->
+  <base href=".">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Yao Mark Mu</title>
+  <link rel="icon" type="image/x-icon" href="https://sapien.ucsd.edu/favicon.ico">
+
+  <link href="./SAPIEN_files/roboto.css" rel="stylesheet" media="all" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="assets/roboto.css">
+  </noscript>
+  <link href="./SAPIEN_files/opensans.css" rel="stylesheet" media="all" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="assets/opensans.css">
+  </noscript>
+  <link href="./SAPIEN_files/icon.css" rel="stylesheet" media="all" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="assets/icon.css">
+  </noscript>
 
   <style>
-  .video-container {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr); /* 8列 */
-    grid-template-rows: repeat(4, auto); /* 4行，高度根据内容自动调整 */
-    gap: 10px; /* 网格项之间的间隙 */
-    width: 100%; /* 容器宽度，可根据需要调整 */
-    margin: auto; /* 居中显示 */
-    padding: 5px; /* 容器内边距 */
-    border: 2px dashed #333; /* 虚线边框 */
-    box-sizing: border-box; /* 边框计算在宽度内 */
-  }
-  .video-item {
-    width: 100%; /* 视频宽度 */
-    height: auto; /* 视频高度自适应 */
-    display: block; /* 显示视频 */
-  }
-  .thumbnail-container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0px;
-  max-height: 400px;
-  overflow-y: auto;
-}
-
-.thumbnail-container .viewer {
-  width: 100%;
-  aspect-ratio: 1; /* 强制保持正方形比例 */
-  background: #ccc; /* 灰色背景 */
-  position: relative;
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-}
-
-.thumbnail-container .viewer.selected {
-  border-color: black;
-}
-
-#interactive-container {
-  display: flex;
-  justify-content: space-between;
-}
-
-#interactive-viewer, #info-box {
-  width: 50%;
-  aspect-ratio: 1; /* 强制保持正方形比例 */
-  background: #ccc;
-  margin: 20px 0; /* 顶部和底部的间距 */
-  float: left; /* 左对齐 */
-  position: relative;
-}
-
-#info-box {
-  background: #f0f0f0; /* 更浅的背景颜色区分内容 */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  box-sizing: border-box;
-}
-
+    .dropdown-arrow {
+      font-size: 1em;
+      /* 调整箭头的大小 */
+      vertical-align: middle;
+      /* 垂直居中对齐 */
+      margin-left: 5px;
+      /* 添加一些间距以避免紧贴文本 */
+    }
   </style>
-  <link rel="stylesheet" href="./files/bulma.min.css">
-  <link rel="stylesheet" href="./files/bulma-carousel.min.css">
-  <link rel="stylesheet" href="./files/bulma-slider.min.css">
-  <link rel="stylesheet" href="./files/fontawesome.all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="stylesheet" href="./files/index.css">
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
 
-  <script type="text/javascript" id="www-widgetapi-script" src="./files/www-widgetapi.js" async=""></script><script src="./files/jquery.min.js"></script>
-  <script defer="" src="./files/fontawesome.all.min.js"></script>
-  <script src="./files/bulma-carousel.min.js"></script>
-  <script src="./files/bulma-slider.min.js"></script>
-  <script src="./files/index.js"></script>
-  <!-- <script src="./files/js/three.module.js"></script>
-  <script src="./files/js/three.module.min.js"></script>
-  <script src="./files/js/MTLLoader.js"></script>
-  <script src="./files/js/OBJLoader.js"></script>
-  <script src="./files/js/OrbitControls.js"></script> -->
+  <style>
+    html,
+    body {
+      height: 100%
+    }
 
-  <link rel="icon" href="./files/icon.jpg">
+    body {
+      margin: 0;
+      font-family: Open Sans, sans-serif;
+      font-size: 16px
+    }
+  </style>
+  <link rel="stylesheet" href="./SAPIEN_files/styles.eb78a5927016bedc.css" media="all" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="styles.eb78a5927016bedc.css">
+  </noscript>
+  <style>
+    mat-toolbar[_ngcontent-cnu-c153] {
+      position: fixed;
+      height: 70px;
+      display: flex;
+      z-index: 1
+    }
 
-  <script src="./files/iframe_api"></script>
+    .placeholder[_ngcontent-cnu-c153] {
+      height: 70px
+    }
+
+    .spacer[_ngcontent-cnu-c153] {
+      flex: 1 1 0
+    }
+
+    .footnote[_ngcontent-cnu-c153] {
+      background-color: #343434;
+      color: #fff;
+      height: 32px
+    }
+
+    .info[_ngcontent-cnu-c153] {
+      max-width: 1200px;
+      padding: 10px
+    }
+
+    .copyright[_ngcontent-cnu-c153] {
+      background-color: #222
+    }
+
+    .info[_ngcontent-cnu-c153] {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      justify-content: center
+    }
+
+    .copyright[_ngcontent-cnu-c153]>*[_ngcontent-cnu-c153] {
+      max-width: 1600px;
+      padding: 5px;
+      text-align: right
+    }
+
+    .nav-mobile[_ngcontent-cnu-c153] {
+      display: none
+    }
+
+    @media only screen and (max-width: 767px) {
+      .nav[_ngcontent-cnu-c153] {
+        display: none
+      }
+
+      .nav-mobile[_ngcontent-cnu-c153] {
+        display: unset
+      }
+    }
+  </style>
+  <style>
+    .cdk-high-contrast-active .mat-toolbar {
+      outline: solid 1px
+    }
+
+    .mat-toolbar-row,
+    .mat-toolbar-single-row {
+      display: flex;
+      box-sizing: border-box;
+      padding: 0 16px;
+      width: 100%;
+      flex-direction: row;
+      align-items: center;
+      white-space: nowrap
+    }
+
+    .mat-toolbar-multiple-rows {
+      display: flex;
+      box-sizing: border-box;
+      flex-direction: column;
+      width: 100%
+    }
+  </style>
+  <style>
+    .mat-button .mat-button-focus-overlay,
+    .mat-icon-button .mat-button-focus-overlay {
+      opacity: 0
+    }
+
+    .mat-button:hover:not(.mat-button-disabled) .mat-button-focus-overlay,
+    .mat-stroked-button:hover:not(.mat-button-disabled) .mat-button-focus-overlay {
+      opacity: .04
+    }
+
+    @media(hover: none) {
+
+      .mat-button:hover:not(.mat-button-disabled) .mat-button-focus-overlay,
+      .mat-stroked-button:hover:not(.mat-button-disabled) .mat-button-focus-overlay {
+        opacity: 0
+      }
+    }
+
+    .mat-button,
+    .mat-icon-button,
+    .mat-stroked-button,
+    .mat-flat-button {
+      box-sizing: border-box;
+      position: relative;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+      cursor: pointer;
+      outline: none;
+      border: none;
+      -webkit-tap-highlight-color: transparent;
+      display: inline-block;
+      white-space: nowrap;
+      text-decoration: none;
+      vertical-align: baseline;
+      text-align: center;
+      margin: 0;
+      min-width: 64px;
+      line-height: 36px;
+      padding: 0 16px;
+      border-radius: 4px;
+      overflow: visible
+    }
+
+    .mat-button::-moz-focus-inner,
+    .mat-icon-button::-moz-focus-inner,
+    .mat-stroked-button::-moz-focus-inner,
+    .mat-flat-button::-moz-focus-inner {
+      border: 0
+    }
+
+    .mat-button.mat-button-disabled,
+    .mat-icon-button.mat-button-disabled,
+    .mat-stroked-button.mat-button-disabled,
+    .mat-flat-button.mat-button-disabled {
+      cursor: default
+    }
+
+    .mat-button.cdk-keyboard-focused .mat-button-focus-overlay,
+    .mat-button.cdk-program-focused .mat-button-focus-overlay,
+    .mat-icon-button.cdk-keyboard-focused .mat-button-focus-overlay,
+    .mat-icon-button.cdk-program-focused .mat-button-focus-overlay,
+    .mat-stroked-button.cdk-keyboard-focused .mat-button-focus-overlay,
+    .mat-stroked-button.cdk-program-focused .mat-button-focus-overlay,
+    .mat-flat-button.cdk-keyboard-focused .mat-button-focus-overlay,
+    .mat-flat-button.cdk-program-focused .mat-button-focus-overlay {
+      opacity: .12
+    }
+
+    .mat-button::-moz-focus-inner,
+    .mat-icon-button::-moz-focus-inner,
+    .mat-stroked-button::-moz-focus-inner,
+    .mat-flat-button::-moz-focus-inner {
+      border: 0
+    }
+
+    .mat-raised-button {
+      box-sizing: border-box;
+      position: relative;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+      cursor: pointer;
+      outline: none;
+      border: none;
+      -webkit-tap-highlight-color: transparent;
+      display: inline-block;
+      white-space: nowrap;
+      text-decoration: none;
+      vertical-align: baseline;
+      text-align: center;
+      margin: 0;
+      min-width: 64px;
+      line-height: 36px;
+      padding: 0 16px;
+      border-radius: 4px;
+      overflow: visible;
+      transform: translate3d(0, 0, 0);
+      transition: background 400ms cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1)
+    }
+
+    .mat-raised-button::-moz-focus-inner {
+      border: 0
+    }
+
+    .mat-raised-button.mat-button-disabled {
+      cursor: default
+    }
+
+    .mat-raised-button.cdk-keyboard-focused .mat-button-focus-overlay,
+    .mat-raised-button.cdk-program-focused .mat-button-focus-overlay {
+      opacity: .12
+    }
+
+    .mat-raised-button::-moz-focus-inner {
+      border: 0
+    }
+
+    ._mat-animation-noopable.mat-raised-button {
+      transition: none;
+      animation: none
+    }
+
+    .mat-stroked-button {
+      border: 1px solid currentColor;
+      padding: 0 15px;
+      line-height: 34px
+    }
+
+    .mat-stroked-button .mat-button-ripple.mat-ripple,
+    .mat-stroked-button .mat-button-focus-overlay {
+      top: -1px;
+      left: -1px;
+      right: -1px;
+      bottom: -1px
+    }
+
+    .mat-fab {
+      box-sizing: border-box;
+      position: relative;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+      cursor: pointer;
+      outline: none;
+      border: none;
+      -webkit-tap-highlight-color: transparent;
+      display: inline-block;
+      white-space: nowrap;
+      text-decoration: none;
+      vertical-align: baseline;
+      text-align: center;
+      margin: 0;
+      min-width: 64px;
+      line-height: 36px;
+      padding: 0 16px;
+      border-radius: 4px;
+      overflow: visible;
+      transform: translate3d(0, 0, 0);
+      transition: background 400ms cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+      min-width: 0;
+      border-radius: 50%;
+      width: 56px;
+      height: 56px;
+      padding: 0;
+      flex-shrink: 0
+    }
+
+    .mat-fab::-moz-focus-inner {
+      border: 0
+    }
+
+    .mat-fab.mat-button-disabled {
+      cursor: default
+    }
+
+    .mat-fab.cdk-keyboard-focused .mat-button-focus-overlay,
+    .mat-fab.cdk-program-focused .mat-button-focus-overlay {
+      opacity: .12
+    }
+
+    .mat-fab::-moz-focus-inner {
+      border: 0
+    }
+
+    ._mat-animation-noopable.mat-fab {
+      transition: none;
+      animation: none
+    }
+
+    .mat-fab .mat-button-wrapper {
+      padding: 16px 0;
+      display: inline-block;
+      line-height: 24px
+    }
+
+    .mat-mini-fab {
+      box-sizing: border-box;
+      position: relative;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+      cursor: pointer;
+      outline: none;
+      border: none;
+      -webkit-tap-highlight-color: transparent;
+      display: inline-block;
+      white-space: nowrap;
+      text-decoration: none;
+      vertical-align: baseline;
+      text-align: center;
+      margin: 0;
+      min-width: 64px;
+      line-height: 36px;
+      padding: 0 16px;
+      border-radius: 4px;
+      overflow: visible;
+      transform: translate3d(0, 0, 0);
+      transition: background 400ms cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+      min-width: 0;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      flex-shrink: 0
+    }
+
+    .mat-mini-fab::-moz-focus-inner {
+      border: 0
+    }
+
+    .mat-mini-fab.mat-button-disabled {
+      cursor: default
+    }
+
+    .mat-mini-fab.cdk-keyboard-focused .mat-button-focus-overlay,
+    .mat-mini-fab.cdk-program-focused .mat-button-focus-overlay {
+      opacity: .12
+    }
+
+    .mat-mini-fab::-moz-focus-inner {
+      border: 0
+    }
+
+    ._mat-animation-noopable.mat-mini-fab {
+      transition: none;
+      animation: none
+    }
+
+    .mat-mini-fab .mat-button-wrapper {
+      padding: 8px 0;
+      display: inline-block;
+      line-height: 24px
+    }
+
+    .mat-icon-button {
+      padding: 0;
+      min-width: 0;
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      line-height: 40px;
+      border-radius: 50%
+    }
+
+    .mat-icon-button i,
+    .mat-icon-button .mat-icon {
+      line-height: 24px
+    }
+
+    .mat-button-ripple.mat-ripple,
+    .mat-button-focus-overlay {
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      position: absolute;
+      pointer-events: none;
+      border-radius: inherit
+    }
+
+    .mat-button-ripple.mat-ripple:not(:empty) {
+      transform: translateZ(0)
+    }
+
+    .mat-button-focus-overlay {
+      opacity: 0;
+      transition: opacity 200ms cubic-bezier(0.35, 0, 0.25, 1), background-color 200ms cubic-bezier(0.35, 0, 0.25, 1)
+    }
+
+    ._mat-animation-noopable .mat-button-focus-overlay {
+      transition: none
+    }
+
+    .mat-button-ripple-round {
+      border-radius: 50%;
+      z-index: 1
+    }
+
+    .mat-button .mat-button-wrapper>*,
+    .mat-flat-button .mat-button-wrapper>*,
+    .mat-stroked-button .mat-button-wrapper>*,
+    .mat-raised-button .mat-button-wrapper>*,
+    .mat-icon-button .mat-button-wrapper>*,
+    .mat-fab .mat-button-wrapper>*,
+    .mat-mini-fab .mat-button-wrapper>* {
+      vertical-align: middle
+    }
+
+    .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-prefix .mat-icon-button,
+    .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      font-size: inherit;
+      width: 2.5em;
+      height: 2.5em
+    }
+
+    .cdk-high-contrast-active .mat-button,
+    .cdk-high-contrast-active .mat-flat-button,
+    .cdk-high-contrast-active .mat-raised-button,
+    .cdk-high-contrast-active .mat-icon-button,
+    .cdk-high-contrast-active .mat-fab,
+    .cdk-high-contrast-active .mat-mini-fab {
+      outline: solid 1px
+    }
+
+    .cdk-high-contrast-active .mat-button-base.cdk-keyboard-focused,
+    .cdk-high-contrast-active .mat-button-base.cdk-program-focused {
+      outline: solid 3px
+    }
+  </style>
+  <style>
+    .mat-icon {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+      background-repeat: no-repeat;
+      display: inline-block;
+      fill: currentColor;
+      height: 24px;
+      width: 24px
+    }
+
+    .mat-icon.mat-icon-inline {
+      font-size: inherit;
+      height: inherit;
+      line-height: inherit;
+      width: inherit
+    }
+
+    [dir=rtl] .mat-icon-rtl-mirror {
+      transform: scale(-1, 1)
+    }
+
+    .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-prefix .mat-icon,
+    .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon {
+      display: block
+    }
+
+    .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-prefix .mat-icon-button .mat-icon,
+    .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button .mat-icon {
+      margin: auto
+    }
+  </style>
+  <style>
+    mat-menu {
+      display: none
+    }
+
+    .mat-menu-panel {
+      min-width: 112px;
+      max-width: 280px;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+      max-height: calc(100vh - 48px);
+      border-radius: 4px;
+      outline: 0;
+      min-height: 64px
+    }
+
+    .mat-menu-panel.ng-animating {
+      pointer-events: none
+    }
+
+    .cdk-high-contrast-active .mat-menu-panel {
+      outline: solid 1px
+    }
+
+    .mat-menu-content:not(:empty) {
+      padding-top: 8px;
+      padding-bottom: 8px
+    }
+
+    .mat-menu-item {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+      cursor: pointer;
+      outline: none;
+      border: none;
+      -webkit-tap-highlight-color: transparent;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
+      line-height: 48px;
+      height: 48px;
+      padding: 0 16px;
+      text-align: left;
+      text-decoration: none;
+      max-width: 100%;
+      position: relative
+    }
+
+    .mat-menu-item::-moz-focus-inner {
+      border: 0
+    }
+
+    .mat-menu-item[disabled] {
+      cursor: default
+    }
+
+    [dir=rtl] .mat-menu-item {
+      text-align: right
+    }
+
+    .mat-menu-item .mat-icon {
+      margin-right: 16px;
+      vertical-align: middle
+    }
+
+    .mat-menu-item .mat-icon svg {
+      vertical-align: top
+    }
+
+    [dir=rtl] .mat-menu-item .mat-icon {
+      margin-left: 16px;
+      margin-right: 0
+    }
+
+    .mat-menu-item[disabled] {
+      pointer-events: none
+    }
+
+    .cdk-high-contrast-active .mat-menu-item {
+      margin-top: 1px
+    }
+
+    .cdk-high-contrast-active .mat-menu-item.cdk-program-focused,
+    .cdk-high-contrast-active .mat-menu-item.cdk-keyboard-focused,
+    .cdk-high-contrast-active .mat-menu-item-highlighted {
+      outline: dotted 1px
+    }
+
+    .mat-menu-item-submenu-trigger {
+      padding-right: 32px
+    }
+
+    [dir=rtl] .mat-menu-item-submenu-trigger {
+      padding-right: 16px;
+      padding-left: 32px
+    }
+
+    .mat-menu-submenu-icon {
+      position: absolute;
+      top: 50%;
+      right: 16px;
+      transform: translateY(-50%);
+      width: 5px;
+      height: 10px;
+      fill: currentColor
+    }
+
+    [dir=rtl] .mat-menu-submenu-icon {
+      right: auto;
+      left: 16px;
+      transform: translateY(-50%) scaleX(-1)
+    }
+
+    .cdk-high-contrast-active .mat-menu-submenu-icon {
+      fill: CanvasText
+    }
+
+    button.mat-menu-item {
+      width: 100%
+    }
+
+    .mat-menu-item .mat-menu-ripple {
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      position: absolute;
+      pointer-events: none
+    }
+  </style>
+  <style>
+    .body[_ngcontent-cnu-c137] {
+      max-width: 1200px;
+      margin: auto;
+      min-height: 90vh
+    }
+
+    .title[_ngcontent-cnu-c137] {
+      padding: 20px;
+      text-align: center
+    }
+
+    .content[_ngcontent-cnu-c137] {
+      display: flex;
+      flex-direction: row
+    }
+
+    .nav-container[_ngcontent-cnu-c137] {
+      margin: 10px;
+      width: 200px;
+      height: 60vh;
+      padding: 10px;
+      overflow: auto
+    }
+
+    .display[_ngcontent-cnu-c137] {
+      margin: 10px;
+      flex: 1 1 0;
+      background-color: #f0f0f0
+    }
+
+    .nav-item.active[_ngcontent-cnu-c137] {
+      background-color: #ccc
+    }
+
+    .images[_ngcontent-cnu-c137] {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap
+    }
+
+    .image-slot[_ngcontent-cnu-c137] {
+      width: 20%;
+      padding: 0;
+      margin: 0;
+      position: relative
+    }
+
+    .image-slot[_ngcontent-cnu-c137]:hover img[_ngcontent-cnu-c137] {
+      border: 1px solid black
+    }
+
+    .image-slot[_ngcontent-cnu-c137] img[_ngcontent-cnu-c137] {
+      border: 1px solid transparent;
+      max-width: calc(100% - 1px);
+      height: auto
+    }
+
+    .image-slot[_ngcontent-cnu-c137] .download[_ngcontent-cnu-c137] {
+      opacity: 0;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      font-size: 2em
+    }
+
+    .image-slot[_ngcontent-cnu-c137] .download[_ngcontent-cnu-c137] {
+      opacity: 0;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      color: #777;
+      transition: .4s all
+    }
+
+    .image-slot[_ngcontent-cnu-c137]:hover .download[_ngcontent-cnu-c137] {
+      opacity: 1
+    }
+
+    .image-slot[_ngcontent-cnu-c137] .download[_ngcontent-cnu-c137]:hover {
+      color: #333
+    }
+
+    .tooltip {
+      font-size: 1em;
+      white-space: pre
+    }
+
+    .warning[_ngcontent-cnu-c137] {
+      display: none
+    }
+
+    @media only screen and (max-width: 767px) {
+      .body[_ngcontent-cnu-c137] {
+        display: none
+      }
+
+      .warning[_ngcontent-cnu-c137] {
+        text-align: center;
+        padding: 10px;
+        display: block;
+        height: 100vh
+      }
+    }
+  </style>
+  <style>
+    .mat-card {
+      transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+      display: block;
+      position: relative;
+      padding: 16px;
+      border-radius: 4px
+    }
+
+    ._mat-animation-noopable.mat-card {
+      transition: none;
+      animation: none
+    }
+
+    .mat-card .mat-divider-horizontal {
+      position: absolute;
+      left: 0;
+      width: 100%
+    }
+
+    [dir=rtl] .mat-card .mat-divider-horizontal {
+      left: auto;
+      right: 0
+    }
+
+    .mat-card .mat-divider-horizontal.mat-divider-inset {
+      position: static;
+      margin: 0
+    }
+
+    [dir=rtl] .mat-card .mat-divider-horizontal.mat-divider-inset {
+      margin-right: 0
+    }
+
+    .cdk-high-contrast-active .mat-card {
+      outline: solid 1px
+    }
+
+    .mat-card-actions,
+    .mat-card-subtitle,
+    .mat-card-content {
+      display: block;
+      margin-bottom: 16px
+    }
+
+    .mat-card-title {
+      display: block;
+      margin-bottom: 8px
+    }
+
+    .mat-card-actions {
+      margin-left: -8px;
+      margin-right: -8px;
+      padding: 8px 0
+    }
+
+    .mat-card-actions-align-end {
+      display: flex;
+      justify-content: flex-end
+    }
+
+    .mat-card-image {
+      width: calc(100% + 32px);
+      margin: 0 -16px 16px -16px;
+      display: block;
+      overflow: hidden
+    }
+
+    .mat-card-image img {
+      width: 100%
+    }
+
+    .mat-card-footer {
+      display: block;
+      margin: 0 -16px -16px -16px
+    }
+
+    .mat-card-actions .mat-button,
+    .mat-card-actions .mat-raised-button,
+    .mat-card-actions .mat-stroked-button {
+      margin: 0 8px
+    }
+
+    .mat-card-header {
+      display: flex;
+      flex-direction: row
+    }
+
+    .mat-card-header .mat-card-title {
+      margin-bottom: 12px
+    }
+
+    .mat-card-header-text {
+      margin: 0 16px
+    }
+
+    .mat-card-avatar {
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      object-fit: cover
+    }
+
+    .mat-card-title-group {
+      display: flex;
+      justify-content: space-between
+    }
+
+    .mat-card-sm-image {
+      width: 80px;
+      height: 80px
+    }
+
+    .mat-card-md-image {
+      width: 112px;
+      height: 112px
+    }
+
+    .mat-card-lg-image {
+      width: 152px;
+      height: 152px
+    }
+
+    .mat-card-xl-image {
+      width: 240px;
+      height: 240px;
+      margin: -8px
+    }
+
+    .mat-card-title-group>.mat-card-xl-image {
+      margin: -8px 0 8px
+    }
+
+    @media(max-width: 599px) {
+      .mat-card-title-group {
+        margin: 0
+      }
+
+      .mat-card-xl-image {
+        margin-left: 0;
+        margin-right: 0
+      }
+    }
+
+    .mat-card>:first-child,
+    .mat-card-content>:first-child {
+      margin-top: 0
+    }
+
+    .mat-card>:last-child:not(.mat-card-footer),
+    .mat-card-content>:last-child:not(.mat-card-footer) {
+      margin-bottom: 0
+    }
+
+    .mat-card-image:first-child {
+      margin-top: -16px;
+      border-top-left-radius: inherit;
+      border-top-right-radius: inherit
+    }
+
+    .mat-card>.mat-card-actions:last-child {
+      margin-bottom: -8px;
+      padding-bottom: 0
+    }
+
+    .mat-card-actions:not(.mat-card-actions-align-end) .mat-button:first-child,
+    .mat-card-actions:not(.mat-card-actions-align-end) .mat-raised-button:first-child,
+    .mat-card-actions:not(.mat-card-actions-align-end) .mat-stroked-button:first-child {
+      margin-left: 0;
+      margin-right: 0
+    }
+
+    .mat-card-actions-align-end .mat-button:last-child,
+    .mat-card-actions-align-end .mat-raised-button:last-child,
+    .mat-card-actions-align-end .mat-stroked-button:last-child {
+      margin-left: 0;
+      margin-right: 0
+    }
+
+    .mat-card-title:not(:first-child),
+    .mat-card-subtitle:not(:first-child) {
+      margin-top: -4px
+    }
+
+    .mat-card-header .mat-card-subtitle:not(:first-child) {
+      margin-top: -8px
+    }
+
+    .mat-card>.mat-card-xl-image:first-child {
+      margin-top: -8px
+    }
+
+    .mat-card>.mat-card-xl-image:last-child {
+      margin-bottom: -8px
+    }
+  </style>
+  <style>
+    .mat-subheader {
+      display: flex;
+      box-sizing: border-box;
+      padding: 16px;
+      align-items: center
+    }
+
+    .mat-list-base .mat-subheader {
+      margin: 0
+    }
+
+    .mat-list-base {
+      padding-top: 8px;
+      display: block;
+      -webkit-tap-highlight-color: transparent
+    }
+
+    .mat-list-base .mat-subheader {
+      height: 48px;
+      line-height: 16px
+    }
+
+    .mat-list-base .mat-subheader:first-child {
+      margin-top: -8px
+    }
+
+    .mat-list-base .mat-list-item,
+    .mat-list-base .mat-list-option {
+      display: block;
+      height: 48px;
+      -webkit-tap-highlight-color: transparent;
+      width: 100%;
+      padding: 0
+    }
+
+    .mat-list-base .mat-list-item .mat-list-item-content,
+    .mat-list-base .mat-list-option .mat-list-item-content {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      box-sizing: border-box;
+      padding: 0 16px;
+      position: relative;
+      height: inherit
+    }
+
+    .mat-list-base .mat-list-item .mat-list-item-content-reverse,
+    .mat-list-base .mat-list-option .mat-list-item-content-reverse {
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      flex-direction: row-reverse;
+      justify-content: space-around
+    }
+
+    .mat-list-base .mat-list-item .mat-list-item-ripple,
+    .mat-list-base .mat-list-option .mat-list-item-ripple {
+      display: block;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      position: absolute;
+      pointer-events: none
+    }
+
+    .mat-list-base .mat-list-item.mat-list-item-with-avatar,
+    .mat-list-base .mat-list-option.mat-list-item-with-avatar {
+      height: 56px
+    }
+
+    .mat-list-base .mat-list-item.mat-2-line,
+    .mat-list-base .mat-list-option.mat-2-line {
+      height: 72px
+    }
+
+    .mat-list-base .mat-list-item.mat-3-line,
+    .mat-list-base .mat-list-option.mat-3-line {
+      height: 88px
+    }
+
+    .mat-list-base .mat-list-item.mat-multi-line,
+    .mat-list-base .mat-list-option.mat-multi-line {
+      height: auto
+    }
+
+    .mat-list-base .mat-list-item.mat-multi-line .mat-list-item-content,
+    .mat-list-base .mat-list-option.mat-multi-line .mat-list-item-content {
+      padding-top: 16px;
+      padding-bottom: 16px
+    }
+
+    .mat-list-base .mat-list-item .mat-list-text,
+    .mat-list-base .mat-list-option .mat-list-text {
+      display: flex;
+      flex-direction: column;
+      flex: auto;
+      box-sizing: border-box;
+      overflow: hidden;
+      padding: 0
+    }
+
+    .mat-list-base .mat-list-item .mat-list-text>*,
+    .mat-list-base .mat-list-option .mat-list-text>* {
+      margin: 0;
+      padding: 0;
+      font-weight: normal;
+      font-size: inherit
+    }
+
+    .mat-list-base .mat-list-item .mat-list-text:empty,
+    .mat-list-base .mat-list-option .mat-list-text:empty {
+      display: none
+    }
+
+    .mat-list-base .mat-list-item.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,
+    .mat-list-base .mat-list-item.mat-list-option .mat-list-item-content .mat-list-text,
+    .mat-list-base .mat-list-option.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,
+    .mat-list-base .mat-list-option.mat-list-option .mat-list-item-content .mat-list-text {
+      padding-right: 0;
+      padding-left: 16px
+    }
+
+    [dir=rtl] .mat-list-base .mat-list-item.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,
+    [dir=rtl] .mat-list-base .mat-list-item.mat-list-option .mat-list-item-content .mat-list-text,
+    [dir=rtl] .mat-list-base .mat-list-option.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,
+    [dir=rtl] .mat-list-base .mat-list-option.mat-list-option .mat-list-item-content .mat-list-text {
+      padding-right: 16px;
+      padding-left: 0
+    }
+
+    .mat-list-base .mat-list-item.mat-list-item-with-avatar .mat-list-item-content-reverse .mat-list-text,
+    .mat-list-base .mat-list-item.mat-list-option .mat-list-item-content-reverse .mat-list-text,
+    .mat-list-base .mat-list-option.mat-list-item-with-avatar .mat-list-item-content-reverse .mat-list-text,
+    .mat-list-base .mat-list-option.mat-list-option .mat-list-item-content-reverse .mat-list-text {
+      padding-left: 0;
+      padding-right: 16px
+    }
+
+    [dir=rtl] .mat-list-base .mat-list-item.mat-list-item-with-avatar .mat-list-item-content-reverse .mat-list-text,
+    [dir=rtl] .mat-list-base .mat-list-item.mat-list-option .mat-list-item-content-reverse .mat-list-text,
+    [dir=rtl] .mat-list-base .mat-list-option.mat-list-item-with-avatar .mat-list-item-content-reverse .mat-list-text,
+    [dir=rtl] .mat-list-base .mat-list-option.mat-list-option .mat-list-item-content-reverse .mat-list-text {
+      padding-right: 0;
+      padding-left: 16px
+    }
+
+    .mat-list-base .mat-list-item.mat-list-item-with-avatar.mat-list-option .mat-list-item-content-reverse .mat-list-text,
+    .mat-list-base .mat-list-item.mat-list-item-with-avatar.mat-list-option .mat-list-item-content .mat-list-text,
+    .mat-list-base .mat-list-option.mat-list-item-with-avatar.mat-list-option .mat-list-item-content-reverse .mat-list-text,
+    .mat-list-base .mat-list-option.mat-list-item-with-avatar.mat-list-option .mat-list-item-content .mat-list-text {
+      padding-right: 16px;
+      padding-left: 16px
+    }
+
+    .mat-list-base .mat-list-item .mat-list-avatar,
+    .mat-list-base .mat-list-option .mat-list-avatar {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover
+    }
+
+    .mat-list-base .mat-list-item .mat-list-avatar~.mat-divider-inset,
+    .mat-list-base .mat-list-option .mat-list-avatar~.mat-divider-inset {
+      margin-left: 72px;
+      width: calc(100% - 72px)
+    }
+
+    [dir=rtl] .mat-list-base .mat-list-item .mat-list-avatar~.mat-divider-inset,
+    [dir=rtl] .mat-list-base .mat-list-option .mat-list-avatar~.mat-divider-inset {
+      margin-left: auto;
+      margin-right: 72px
+    }
+
+    .mat-list-base .mat-list-item .mat-list-icon,
+    .mat-list-base .mat-list-option .mat-list-icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      font-size: 24px;
+      box-sizing: content-box;
+      border-radius: 50%;
+      padding: 4px
+    }
+
+    .mat-list-base .mat-list-item .mat-list-icon~.mat-divider-inset,
+    .mat-list-base .mat-list-option .mat-list-icon~.mat-divider-inset {
+      margin-left: 64px;
+      width: calc(100% - 64px)
+    }
+
+    [dir=rtl] .mat-list-base .mat-list-item .mat-list-icon~.mat-divider-inset,
+    [dir=rtl] .mat-list-base .mat-list-option .mat-list-icon~.mat-divider-inset {
+      margin-left: auto;
+      margin-right: 64px
+    }
+
+    .mat-list-base .mat-list-item .mat-divider,
+    .mat-list-base .mat-list-option .mat-divider {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      margin: 0
+    }
+
+    [dir=rtl] .mat-list-base .mat-list-item .mat-divider,
+    [dir=rtl] .mat-list-base .mat-list-option .mat-divider {
+      margin-left: auto;
+      margin-right: 0
+    }
+
+    .mat-list-base .mat-list-item .mat-divider.mat-divider-inset,
+    .mat-list-base .mat-list-option .mat-divider.mat-divider-inset {
+      position: absolute
+    }
+
+    .mat-list-base[dense] {
+      padding-top: 4px;
+      display: block
+    }
+
+    .mat-list-base[dense] .mat-subheader {
+      height: 40px;
+      line-height: 8px
+    }
+
+    .mat-list-base[dense] .mat-subheader:first-child {
+      margin-top: -4px
+    }
+
+    .mat-list-base[dense] .mat-list-item,
+    .mat-list-base[dense] .mat-list-option {
+      display: block;
+      height: 40px;
+      -webkit-tap-highlight-color: transparent;
+      width: 100%;
+      padding: 0
+    }
+
+    .mat-list-base[dense] .mat-list-item .mat-list-item-content,
+    .mat-list-base[dense] .mat-list-option .mat-list-item-content {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      box-sizing: border-box;
+      padding: 0 16px;
+      position: relative;
+      height: inherit
+    }
+
+    .mat-list-base[dense] .mat-list-item .mat-list-item-content-reverse,
+    .mat-list-base[dense] .mat-list-option .mat-list-item-content-reverse {
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      flex-direction: row-reverse;
+      justify-content: space-around
+    }
+
+    .mat-list-base[dense] .mat-list-item .mat-list-item-ripple,
+    .mat-list-base[dense] .mat-list-option .mat-list-item-ripple {
+      display: block;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      position: absolute;
+      pointer-events: none
+    }
+
+    .mat-list-base[dense] .mat-list-item.mat-list-item-with-avatar,
+    .mat-list-base[dense] .mat-list-option.mat-list-item-with-avatar {
+      height: 48px
+    }
+
+    .mat-list-base[dense] .mat-list-item.mat-2-line,
+    .mat-list-base[dense] .mat-list-option.mat-2-line {
+      height: 60px
+    }
+
+    .mat-list-base[dense] .mat-list-item.mat-3-line,
+    .mat-list-base[dense] .mat-list-option.mat-3-line {
+      height: 76px
+    }
+
+    .mat-list-base[dense] .mat-list-item.mat-multi-line,
+    .mat-list-base[dense] .mat-list-option.mat-multi-line {
+      height: auto
+    }
+
+    .mat-list-base[dense] .mat-list-item.mat-multi-line .mat-list-item-content,
+    .mat-list-base[dense] .mat-list-option.mat-multi-line .mat-list-item-content {
+      padding-top: 16px;
+      padding-bottom: 16px
+    }
+
+    .mat-list-base[dense] .mat-list-item .mat-list-text,
+    .mat-list-base[dense] .mat-list-option .mat-list-text {
+      display: flex;
+      flex-direction: column;
+      flex: auto;
+      box-sizing: border-box;
+      overflow: hidden;
+      padding: 0
+    }
+
+    .mat-list-base[dense] .mat-list-item .mat-list-text>*,
+    .mat-list-base[dense] .mat-list-option .mat-list-text>* {
+      margin: 0;
+      padding: 0;
+      font-weight: normal;
+      font-size: inherit
+    }
+
+    .mat-list-base[dense] .mat-list-item .mat-list-text:empty,
+    .mat-list-base[dense] .mat-list-option .mat-list-text:empty {
+      display: none
+    }
+
+    .mat-list-base[dense] .mat-list-item.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,
+    .mat-list-base[dense] .mat-list-item.mat-list-option .mat-list-item-content .mat-list-text,
+    .mat-list-base[dense] .mat-list-option.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,
+    .mat-list-base[dense] .mat-list-option.mat-list-option .mat-list-item-content .mat-list-text {
+      padding-right: 0;
+      padding-left: 16px
+    }
+
+    [dir=rtl] .mat-list-base[dense] .mat-list-item.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,
+    [dir=rtl] .mat-list-base[dense] .mat-list-item.mat-list-option .mat-list-item-content .mat-list-text,
+    [dir=rtl] .mat-list-base[dense] .mat-list-option.mat-list-item-with-avatar .mat-list-item-content .mat-list-text,
+    [dir=rtl] .mat-list-base[dense] .mat-list-option.mat-list-option .mat-list-item-content .mat-list-text {
+      padding-right: 16px;
+      padding-left: 0
+    }
+
+    .mat-list-base[dense] .mat-list-item.mat-list-item-with-avatar .mat-list-item-content-reverse .mat-list-text,
+    .mat-list-base[dense] .mat-list-item.mat-list-option .mat-list-item-content-reverse .mat-list-text,
+    .mat-list-base[dense] .mat-list-option.mat-list-item-with-avatar .mat-list-item-content-reverse .mat-list-text,
+    .mat-list-base[dense] .mat-list-option.mat-list-option .mat-list-item-content-reverse .mat-list-text {
+      padding-left: 0;
+      padding-right: 16px
+    }
+
+    [dir=rtl] .mat-list-base[dense] .mat-list-item.mat-list-item-with-avatar .mat-list-item-content-reverse .mat-list-text,
+    [dir=rtl] .mat-list-base[dense] .mat-list-item.mat-list-option .mat-list-item-content-reverse .mat-list-text,
+    [dir=rtl] .mat-list-base[dense] .mat-list-option.mat-list-item-with-avatar .mat-list-item-content-reverse .mat-list-text,
+    [dir=rtl] .mat-list-base[dense] .mat-list-option.mat-list-option .mat-list-item-content-reverse .mat-list-text {
+      padding-right: 0;
+      padding-left: 16px
+    }
+
+    .mat-list-base[dense] .mat-list-item.mat-list-item-with-avatar.mat-list-option .mat-list-item-content-reverse .mat-list-text,
+    .mat-list-base[dense] .mat-list-item.mat-list-item-with-avatar.mat-list-option .mat-list-item-content .mat-list-text,
+    .mat-list-base[dense] .mat-list-option.mat-list-item-with-avatar.mat-list-option .mat-list-item-content-reverse .mat-list-text,
+    .mat-list-base[dense] .mat-list-option.mat-list-item-with-avatar.mat-list-option .mat-list-item-content .mat-list-text {
+      padding-right: 16px;
+      padding-left: 16px
+    }
+
+    .mat-list-base[dense] .mat-list-item .mat-list-avatar,
+    .mat-list-base[dense] .mat-list-option .mat-list-avatar {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover
+    }
+
+    .mat-list-base[dense] .mat-list-item .mat-list-avatar~.mat-divider-inset,
+    .mat-list-base[dense] .mat-list-option .mat-list-avatar~.mat-divider-inset {
+      margin-left: 68px;
+      width: calc(100% - 68px)
+    }
+
+    [dir=rtl] .mat-list-base[dense] .mat-list-item .mat-list-avatar~.mat-divider-inset,
+    [dir=rtl] .mat-list-base[dense] .mat-list-option .mat-list-avatar~.mat-divider-inset {
+      margin-left: auto;
+      margin-right: 68px
+    }
+
+    .mat-list-base[dense] .mat-list-item .mat-list-icon,
+    .mat-list-base[dense] .mat-list-option .mat-list-icon {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      font-size: 20px;
+      box-sizing: content-box;
+      border-radius: 50%;
+      padding: 4px
+    }
+
+    .mat-list-base[dense] .mat-list-item .mat-list-icon~.mat-divider-inset,
+    .mat-list-base[dense] .mat-list-option .mat-list-icon~.mat-divider-inset {
+      margin-left: 60px;
+      width: calc(100% - 60px)
+    }
+
+    [dir=rtl] .mat-list-base[dense] .mat-list-item .mat-list-icon~.mat-divider-inset,
+    [dir=rtl] .mat-list-base[dense] .mat-list-option .mat-list-icon~.mat-divider-inset {
+      margin-left: auto;
+      margin-right: 60px
+    }
+
+    .mat-list-base[dense] .mat-list-item .mat-divider,
+    .mat-list-base[dense] .mat-list-option .mat-divider {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      margin: 0
+    }
+
+    [dir=rtl] .mat-list-base[dense] .mat-list-item .mat-divider,
+    [dir=rtl] .mat-list-base[dense] .mat-list-option .mat-divider {
+      margin-left: auto;
+      margin-right: 0
+    }
+
+    .mat-list-base[dense] .mat-list-item .mat-divider.mat-divider-inset,
+    .mat-list-base[dense] .mat-list-option .mat-divider.mat-divider-inset {
+      position: absolute
+    }
+
+    .mat-nav-list a {
+      text-decoration: none;
+      color: inherit
+    }
+
+    .mat-nav-list .mat-list-item {
+      cursor: pointer;
+      outline: none
+    }
+
+    mat-action-list button {
+      background: none;
+      color: inherit;
+      border: none;
+      font: inherit;
+      outline: inherit;
+      -webkit-tap-highlight-color: transparent;
+      text-align: left
+    }
+
+    [dir=rtl] mat-action-list button {
+      text-align: right
+    }
+
+    mat-action-list button::-moz-focus-inner {
+      border: 0
+    }
+
+    mat-action-list .mat-list-item {
+      cursor: pointer;
+      outline: inherit
+    }
+
+    .mat-list-option:not(.mat-list-item-disabled) {
+      cursor: pointer;
+      outline: none
+    }
+
+    .mat-list-item-disabled {
+      pointer-events: none
+    }
+
+    .cdk-high-contrast-active .mat-list-item-disabled {
+      opacity: .5
+    }
+
+    .cdk-high-contrast-active :host .mat-list-item-disabled {
+      opacity: .5
+    }
+
+    .cdk-high-contrast-active .mat-selection-list:focus {
+      outline-style: dotted
+    }
+
+    .cdk-high-contrast-active .mat-list-option:hover,
+    .cdk-high-contrast-active .mat-list-option:focus,
+    .cdk-high-contrast-active .mat-nav-list .mat-list-item:hover,
+    .cdk-high-contrast-active .mat-nav-list .mat-list-item:focus,
+    .cdk-high-contrast-active mat-action-list .mat-list-item:hover,
+    .cdk-high-contrast-active mat-action-list .mat-list-item:focus {
+      outline: dotted 1px;
+      z-index: 1
+    }
+
+    .cdk-high-contrast-active .mat-list-single-selected-option::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 16px;
+      transform: translateY(-50%);
+      width: 10px;
+      height: 0;
+      border-bottom: solid 10px;
+      border-radius: 10px
+    }
+
+    .cdk-high-contrast-active [dir=rtl] .mat-list-single-selected-option::after {
+      right: auto;
+      left: 16px
+    }
+
+    @media(hover: none) {
+
+      .mat-list-option:not(.mat-list-single-selected-option):not(.mat-list-item-disabled):hover,
+      .mat-nav-list .mat-list-item:not(.mat-list-item-disabled):hover,
+      .mat-action-list .mat-list-item:not(.mat-list-item-disabled):hover {
+        background: none
+      }
+    }
+  </style>
+  <style>
+    [_nghost-cnu-c136] {
+      display: flex;
+      flex-direction: row
+    }
+
+    .cell[_ngcontent-cnu-c136] {
+      background-color: #fff;
+      border: 1px solid #bea5d5;
+      margin: 0 1px;
+      padding: 4px;
+      text-align: center;
+      vertical-align: middle;
+      cursor: pointer;
+      transition: all .5s
+    }
+
+    .cell.active[_ngcontent-cnu-c136] {
+      color: #fff;
+      background-color: #26b
+    }
+  </style>
+  <style>
+    .mat-tooltip {
+      color: #fff;
+      border-radius: 4px;
+      margin: 14px;
+      max-width: 250px;
+      padding-left: 8px;
+      padding-right: 8px;
+      overflow: hidden;
+      text-overflow: ellipsis
+    }
+
+    .cdk-high-contrast-active .mat-tooltip {
+      outline: solid 1px
+    }
+
+    .mat-tooltip-handset {
+      margin: 24px;
+      padding-left: 16px;
+      padding-right: 16px
+    }
+
+    .mat-tooltip-panel-non-interactive {
+      pointer-events: none
+    }
+  </style>
+  <style type="text/css"></style>
+  <style>
+    .mat-dialog-container {
+      display: block;
+      padding: 24px;
+      border-radius: 4px;
+      box-sizing: border-box;
+      overflow: auto;
+      outline: 0;
+      width: 100%;
+      height: 100%;
+      min-height: inherit;
+      max-height: inherit
+    }
+
+    .cdk-high-contrast-active .mat-dialog-container {
+      outline: solid 1px
+    }
+
+    .mat-dialog-content {
+      display: block;
+      margin: 0 -24px;
+      padding: 0 24px;
+      max-height: 65vh;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch
+    }
+
+    .mat-dialog-title {
+      margin: 0 0 20px;
+      display: block
+    }
+
+    .mat-dialog-actions {
+      padding: 8px 0;
+      display: flex;
+      flex-wrap: wrap;
+      min-height: 52px;
+      align-items: center;
+      box-sizing: content-box;
+      margin-bottom: -24px
+    }
+
+    .mat-dialog-actions[align=end] {
+      justify-content: flex-end
+    }
+
+    .mat-dialog-actions[align=center] {
+      justify-content: center
+    }
+
+    .mat-dialog-actions .mat-button-base+.mat-button-base,
+    .mat-dialog-actions .mat-mdc-button-base+.mat-mdc-button-base {
+      margin-left: 8px
+    }
+
+    [dir=rtl] .mat-dialog-actions .mat-button-base+.mat-button-base,
+    [dir=rtl] .mat-dialog-actions .mat-mdc-button-base+.mat-mdc-button-base {
+      margin-left: 0;
+      margin-right: 8px
+    }
+  </style>
+  <style>
+    [_nghost-cnu-c135] {
+      display: block;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: row
+    }
+
+    .canvas-container[_ngcontent-cnu-c135] {
+      flex: 1 0 0;
+      margin: 0 10px
+    }
+
+    canvas[_ngcontent-cnu-c135] {
+      width: 100%;
+      height: 100%
+    }
+
+    .controller[_ngcontent-cnu-c135] {
+      flex: 0 0 250px;
+      overflow: auto;
+      margin: 0 10px
+    }
+
+    .slider-label[_ngcontent-cnu-c135] {
+      font-size: .9em;
+      margin: 10px 10px 0
+    }
+
+    mat-slider[_ngcontent-cnu-c135] {
+      width: 90%
+    }
+  </style>
+  <style>
+    .logo-container[_ngcontent-cnu-c133] {
+      padding: 20px
+    }
+
+    .logo-content[_ngcontent-cnu-c133] {
+      margin: auto;
+      max-width: 1000px
+    }
+
+    .logo[_ngcontent-cnu-c133] {
+      font-family: Roboto;
+      margin: auto;
+      text-align: center;
+      font-size: 4em;
+      font-weight: 400
+    }
+
+    .sublogo[_ngcontent-cnu-c133] {
+      text-align: center;
+      font-size: 2em
+    }
+
+    .description[_ngcontent-cnu-c133] {
+      font-family: Open Sans
+    }
+
+    .features[_ngcontent-cnu-c133] {
+      margin: auto
+    }
+
+    .feature-items[_ngcontent-cnu-c133] {
+      display: grid;
+      grid-template-columns: auto 400px;
+      grid-column-gap: 20px;
+      -moz-column-gap: 20px;
+      column-gap: 20px;
+      grid-row-gap: 10px;
+      row-gap: 10px
+    }
+
+    .feature-item[_ngcontent-cnu-c133] {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between
+    }
+
+    .challenge[_ngcontent-cnu-c133] {
+      display: flex;
+      flex-direction: row
+    }
+
+    @media only screen and (max-width: 767px) {
+
+      .challenge[_ngcontent-cnu-c133],
+      .feature-items[_ngcontent-cnu-c133] {
+        display: block
+      }
+
+      .feature-items[_ngcontent-cnu-c133]>*[_ngcontent-cnu-c133] {
+        margin-bottom: 20px
+      }
+
+      .feature-items[_ngcontent-cnu-c133] video[_ngcontent-cnu-c133] {
+        display: none
+      }
+    }
+
+    .features[_ngcontent-cnu-c133] .text[_ngcontent-cnu-c133] {
+      color: #555
+    }
+
+    .intro-main-right[_ngcontent-cnu-c133] {
+      width: 40%
+    }
+
+    .section[_ngcontent-cnu-c133] {
+      padding: 40px 0
+    }
+
+    .limit-width[_ngcontent-cnu-c133] {
+      max-width: 1200px;
+      width: 90vw;
+      margin: auto
+    }
+
+    .quick-start-content[_ngcontent-cnu-c133] {
+      padding: 0 20px
+    }
+
+    .quick-start-item[_ngcontent-cnu-c133] {
+      padding: 20px 0
+    }
+  </style>
 </head>
 
 
-<section class="hero">
-  <div class="hero-body">
-    <div class="container">
-      <div class="columns is-centered">
-        <div class="column is-two-thirds is-centered has-text-centered">
-          <h1 class="title is-1 publication-title">Yao Mark Mu</h1>
-          <h2 class="subtitle is-2 publication-subtitle">Yao Mark Mu</h2>
-          <div class="is-size-4 publication-authors">
-            <span class="author-block">
-              <a href="https://tianxingchen.github.io">Tianxing Chen</a><sup>2</sup>&nbsp;&nbsp;&nbsp;
-            </span>
-            <br>
-            <span class="author-block">
-              <!-- <sup>1</sup>Tsinghua Shenzhen International Graduate School, Tsinghua University<br> -->
-              China
-            </span>
-            <p style="font-size: medium; margin-top: 5px;"><sup>*</sup>Equal Contributions, <sup>†</sup>Corresponding author</p>
-          </div>
-        <div style="height: 20px;"></div>
-        <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fmanicm-fast.github.io&count_bg=%23953FB2&title_bg=%2340DFB3&icon=&icon_color=%23E7E7E7&title=ManiCM+Page+Viewers&edge_flat=false"/></a>
-        <body data-new-gr-c-s-check-loaded="14.1176.0" data-gr-ext-installed="">
-        <div style="height: 20px;"></div>
-          <div>
-            <div class="publication-links">
-              <!-- PDF Link. -->
-              <span class="link-block">
-                <a href="https://arxiv.org/pdf/2406.01586" class="external-link button is-normal is-rounded is-dark" target="_blank">
-                  <span class="icon">
-                      <svg class="svg-inline--fa fa-file-pdf fa-w-12" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file-pdf" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 62.9-21.9-12.7-9.6-24.9-23.4-34.5-40.8zM86.1 428.1c0 .8 13.2-5.4 34.9-40.2-6.7 6.3-29.1 24.5-34.9 40.2zM248 160h136v328c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V24C0 10.7 10.7 0 24 0h200v136c0 13.2 10.8 24 24 24zm-8 171.8c-20-12.2-33.3-29-42.7-53.8 4.5-18.5 11.6-46.6 6.2-64.2-4.7-29.4-42.4-26.5-47.8-6.8-5 18.3-.4 44.1 8.1 77-11.6 27.6-28.7 64.6-40.8 85.8-.1 0-.1.1-.2.1-27.1 13.9-73.6 44.5-54.5 68 5.6 6.9 16 10 21.5 10 17.9 0 35.7-18 61.1-61.8 25.8-8.5 54.1-19.1 79-23.2 21.7 11.8 47.1 19.5 64 19.5 29.2 0 31.2-32 19.7-43.4-13.9-13.6-54.3-9.7-73.6-7.2zM377 105L279 7c-4.5-4.5-10.6-7-17-7h-6v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-74.1 255.3c4.1-2.7-2.5-11.9-42.8-9 37.1 15.8 42.8 9 42.8 9z"></path></svg><!-- <i class="fas fa-file-pdf"></i> Font Awesome fontawesome.com -->
-                  </span>
-                  <span>Paper</span>
-                </a>
-              </span>
-              <!-- arXiv Link. -->
-              <span class="link-block">
-                <a href="https://arxiv.org/abs/2406.01586" class="external-link button is-normal is-rounded is-dark" target="_blank">
-                  <span class="icon">
-                      <i class="ai ai-arxiv"></i>
-                  </span>
-                  <span>arXiv</span>
-                </a>
-              </span>
-              <!-- Code Link. -->
-              <span class="link-block">
-                <a href="https://github.com/ManiCM-fast/ManiCM" class="external-link button is-normal is-rounded is-dark" target="_blank">
-                  <span class="icon">
-                      <svg class="svg-inline--fa fa-github fa-w-16" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="github" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" data-fa-i2svg=""><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg><!-- <i class="fab fa-github"></i> Font Awesome fontawesome.com -->
-                  </span>
-                  <span>Code</span>
-                </a>
-              </span>
+<body>
+  <app-root _nghost-cnu-c153="" ng-version="13.2.5">
+    <mat-toolbar _ngcontent-cnu-c153="" color="primary" class="mat-toolbar mat-primary mat-toolbar-single-row">
+      <button _ngcontent-cnu-c153="" aria-haspopup="true" mat-icon-button=""
+        class="mat-focus-indicator mat-menu-trigger nav-mobile mat-icon-button mat-button-base"><span
+          class="mat-button-wrapper">
+          <mat-icon _ngcontent-cnu-c153="" role="img" class="mat-icon notranslate material-icons mat-icon-no-color"
+            aria-hidden="true" data-mat-icon-type="font">menu</mat-icon>
+        </span><span matripple="" class="mat-ripple mat-button-ripple mat-button-ripple-round"></span><span
+          class="mat-button-focus-overlay"></span>
+      </button>
+      <!---->
+      <mat-menu _ngcontent-cnu-c153="" class="ng-star-inserted">
+        <!---->
+      </mat-menu>
+      <!-- 网站Logo按钮 -->
+      <span _ngcontent-cnu-c153="" style="margin: 0 20px;">
+        <button _ngcontent-cnu-c153="" mat-button="" routerlink="/"
+          class="mat-focus-indicator mat-button mat-button-base" style="font-size: 1.7em;" tabindex="0">
+          <span class="mat-button-wrapper">
+            <img _ngcontent-cnu-c153="" src="./SAPIEN_files/sapien_logo_full.jpg" style="height: 60px;">
+          </span>
+          <span matripple="" class="mat-ripple mat-button-ripple"></span>
+          <span class="mat-button-focus-overlay"></span>
+        </button>
+      </span>
+
+      <!-- 导航按钮 -->
+      <button _ngcontent-cnu-c153="" mat-button="" routerlink="/"
+        class="mat-focus-indicator nav mat-button mat-button-base" tabindex="0">
+        <span class="mat-button-wrapper">Home</span>
+        <span matripple="" class="mat-ripple mat-button-ripple"></span>
+        <span class="mat-button-focus-overlay"></span>
+      </button>
+
+      <a _ngcontent-cnu-c153="" href="browse.html" mat-button="" class="mat-focus-indicator nav mat-button mat-button-base" tabindex="0">
+        <span class="mat-button-wrapper">Browse</span>
+        <span matripple="" class="mat-ripple mat-button-ripple"></span>
+        <span class="mat-button-focus-overlay"></span>
+      </a>
+      
+
+      <button _ngcontent-cnu-c153="" mat-button="" routerlink="/downloads"
+        class="mat-focus-indicator nav mat-button mat-button-base" tabindex="0">
+        <span class="mat-button-wrapper">Download</span>
+        <span matripple="" class="mat-ripple mat-button-ripple"></span>
+        <span class="mat-button-focus-overlay"></span>
+      </button>
+
+      <!-- 文档下拉菜单按钮 -->
+      <button _ngcontent-cnu-c153="" aria-haspopup="true" mat-button=""
+        class="mat-focus-indicator mat-menu-trigger nav mat-button mat-button-base">
+        <span class="mat-button-wrapper">Documentation
+          <span class="dropdown-arrow">▼</span>
+        </span>
+        <span matripple="" class="mat-ripple mat-button-ripple"></span>
+        <span class="mat-button-focus-overlay"></span>
+      </button>
+
+      <mat-menu _ngcontent-cnu-c153="" class="ng-star-inserted">
+      </mat-menu>
+
+      <!-- Maniskill下拉菜单按钮 -->
+      <button _ngcontent-cnu-c153="" aria-haspopup="true" mat-button=""
+        class="mat-focus-indicator mat-menu-trigger nav mat-button mat-button-base">
+        <span class="mat-button-wrapper">Maniskill
+          <span class="dropdown-arrow">▼</span>
+        </span>
+        <span matripple="" class="mat-ripple mat-button-ripple"></span>
+        <span class="mat-button-focus-overlay"></span>
+      </button>
+
+      <mat-menu _ngcontent-cnu-c153="" class="ng-star-inserted">
+      </mat-menu>
+
+      <!-- About下拉菜单按钮 -->
+      <button _ngcontent-cnu-c153="" aria-haspopup="true" mat-button=""
+        class="mat-focus-indicator mat-menu-trigger nav mat-button mat-button-base">
+        <span class="mat-button-wrapper">About
+          <span class="dropdown-arrow">▼</span>
+        </span>
+        <span matripple="" class="mat-ripple mat-button-ripple"></span>
+        <span class="mat-button-focus-overlay"></span>
+      </button>
+
+      <mat-menu _ngcontent-cnu-c153="" class="ng-star-inserted">
+      </mat-menu>
+
+      <span _ngcontent-cnu-c153="" class="spacer"></span>
+
+      <!-- 登录/注册按钮 -->
+      <button _ngcontent-cnu-c153="" mat-button=""
+        class="mat-focus-indicator mat-button mat-button-base ng-star-inserted">
+        <span class="mat-button-wrapper">Login/Register</span>
+        <span matripple="" class="mat-ripple mat-button-ripple"></span>
+        <span class="mat-button-focus-overlay"></span>
+      </button>
+      <!---->
+      <!---->
+    </mat-toolbar>
+    <div _ngcontent-cnu-c153="" class="placeholder"></div>
+    <!---->
+    <router-outlet _ngcontent-cnu-c153=""></router-outlet>
+    <app-page-home _nghost-cnu-c133="" class="ng-star-inserted">
+      <div _ngcontent-cnu-c133="" class="body">
+        <div _ngcontent-cnu-c133="" class="logo-container title-block">
+          <div _ngcontent-cnu-c133="" class="logo-content">
+            <h1 _ngcontent-cnu-c133="" class="logo">ARIO</h1>
+            <div _ngcontent-cnu-c133="" class="sublogo">All Robots In One</div>
+            <div _ngcontent-cnu-c133="" class="description justify"> SAPIEN is a realistic and physics-rich simulated
+              environment that hosts a large-scale set for articulated objects. It enables various robotic vision and
+              interaction tasks that require detailed part-level understanding. SAPIEN is a collaborative effort between
+              researchers at UCSD, Stanford and SFU. </div>
+            <div _ngcontent-cnu-c133="" style="text-align: right;">Follow <a _ngcontent-cnu-c133="" target="_blank"
+                href="https://twitter.com/HaoSuLabUCSD"
+                style="color: inherit; text-decoration: underline;">@HaoSuLabUCSD</a> on Twitter for the latest progress
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-
-<section class="section" style="margin-top: -60px">
-  <div class="container">
-    <!-- Abstract. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-two-thirds">
-        <h2 class="title is-2">Object Browser</h2>
-        <div class="thumbnail-container" id="3d-models"></div>
-        <div id="interactive-viewer"></div>
-        <div id="info-box">
-          <p>预设信息展示区域</p>
+      <div _ngcontent-cnu-c133="" class="page-body">
+        <div _ngcontent-cnu-c133="" class="features section gray">
+          <div _ngcontent-cnu-c133="" class="limit-width">
+            <h2 _ngcontent-cnu-c133="">ManiSkill3 Benchmark Release</h2>
+            <div _ngcontent-cnu-c133="" class="challenge">
+              <div _ngcontent-cnu-c133=""
+                style="flex: 1 1 0; display: flex; justify-content: center; flex-direction: column; padding: 10px;">
+                <div _ngcontent-cnu-c133="" class="text"> We introduce <a _ngcontent-cnu-c133=""
+                    href="https://github.com/haosulab/ManiSkill" target="_blank" style="width: 100%;"> SAPIEN
+                    Open-Source Manipulation Skill (ManiSkill) Benchmark </a>, a powerful unified framework for robot
+                  simulation and training powered by SAPIEN. The entire stack is as open-source as possible and
+                  ManiSkill v3 is in beta release now. Among its features include </div>
+                <ul _ngcontent-cnu-c133="" class="text">
+                  <li _ngcontent-cnu-c133=""> GPU parallelized visual data collection system for RGBD + Segmentation
+                    data at 20k FPS </li>
+                  <li _ngcontent-cnu-c133=""> Example robots including quadruped, mobile manipulators, and single-arm
+                    robots </li>
+                  <li _ngcontent-cnu-c133=""> Example tasks covering table-top, locomotion, and dextrous manipulation.
+                  </li>
+                  <li _ngcontent-cnu-c133=""> Flexible unified task building API for GPU </li>
+                </ul>
+                <div _ngcontent-cnu-c133=""><button _ngcontent-cnu-c133="" mat-raised-button="" color="primary"
+                    class="mat-focus-indicator mat-raised-button mat-button-base mat-primary"
+                    style="margin-right: 5px;"><span class="mat-button-wrapper">Go to Website</span><span matripple=""
+                      class="mat-ripple mat-button-ripple"></span><span
+                      class="mat-button-focus-overlay"></span></button></div>
+              </div>
+              <div _ngcontent-cnu-c133="" style="flex: 1 1 10%;"><a _ngcontent-cnu-c133=""
+                  href="https://github.com/haosulab/ManiSkill" target="_blank" style="width: 100%;"><img
+                    _ngcontent-cnu-c133="" src="./SAPIEN_files/maniskill3.jpg" style="width: 100%;"></a></div>
+            </div>
+            <h2 _ngcontent-cnu-c133="">News</h2>
+            <ul _ngcontent-cnu-c133="">
+              <li _ngcontent-cnu-c133="">05/02/2024, <a _ngcontent-cnu-c133=""
+                  href="https://github.com/haosulab/SAPIEN/tree/3.0.0b1" target="_blank">SAPIEN 3</a> and <a
+                  _ngcontent-cnu-c133="" href="https://github.com/haosulab/ManiSkill" target="_blank"> ManiSkill 3</a>
+                beta releases are available. </li>
+              <li _ngcontent-cnu-c133="">02/10/2023, <a _ngcontent-cnu-c133="" href="https://maniskill2.github.io/"
+                  target="_blank">ManiSkill 2</a>, <a _ngcontent-cnu-c133=""
+                  href="https://colab.research.google.com/github/haosulab/ManiSkill2/blob/main/examples/tutorials/1_quickstart.ipynb"
+                  target="_blank">Colab tutorials</a>, <a _ngcontent-cnu-c133=""
+                  href="https://pypi.org/project/mani-skill2/" target="_blank">pip package</a> and the associated <a
+                  _ngcontent-cnu-c133="" href="https://sapien.ucsd.edu/challenges/maniskill/" target="_blank">
+                  challenge</a> fully released with significant improvements on speed and quality. </li>
+              <li _ngcontent-cnu-c133="">02/10/2023, SAPIEN 2.2 released with <a _ngcontent-cnu-c133=""
+                  href="https://sapien.ucsd.edu/docs/2.2/tutorial/rendering/depth_sensor.html">GPU-accelerated
+                  physics-grounded depth sensor</a> and upgraded <a _ngcontent-cnu-c133=""
+                  href="https://sapien.ucsd.edu/docs/2.2/tutorial/rendering/raytracing_renderer.html">ray tracer</a>.
+              </li>
+            </ul><a _ngcontent-cnu-c133="" href="https://sapien.ucsd.edu/#" class="ng-star-inserted">show more</a>
+            <!---->
+            <!---->
+            <!---->
+            <h2 _ngcontent-cnu-c133="">Features &amp; Contents</h2>
+            <div _ngcontent-cnu-c133="" class="feature-items">
+              <div _ngcontent-cnu-c133="" style="flex: 0 0 40%; display: flex; align-items: center;">
+                <div _ngcontent-cnu-c133="">
+                  <h3 _ngcontent-cnu-c133="">SAPIEN Simulator</h3>
+                  <p _ngcontent-cnu-c133="" class="text"> SAPIEN simulator provides physical simulation for robots,
+                    rigidbody, and articulated objects. It powers reinforcement learning and robotics with its pure
+                    Python interface. It also provides multiple rendering modalities, including depth map, normal map,
+                    optical flow, active light, and ray tracing. </p>
+                    <button _ngcontent-cnu-c133="" mat-raised-button=""
+                    color="primary" class="mat-focus-indicator mat-raised-button mat-button-base mat-primary"><span
+                      class="mat-button-wrapper"> Get Started </span><span matripple=""
+                      class="mat-ripple mat-button-ripple"></span><span
+                      class="mat-button-focus-overlay"></span>
+                    </button>
+                </div>
+              </div>
+              <div _ngcontent-cnu-c133="" style="flex: 0 1 40%;"><video _ngcontent-cnu-c133="" playsinline="" loop=""
+                  muted="" autoplay="" style="width: 100%;">
+                  <source _ngcontent-cnu-c133="" src="/assets/sapien_engine.mp4" type="video/mp4">
+                </video></div>
+                <div _ngcontent-cnu-c133="" style="flex: 1 0 0; display: flex; align-items: center;">
+                  <div _ngcontent-cnu-c133="">
+                    <h3 _ngcontent-cnu-c133="">PartNet-Mobility Dataset</h3>
+                    <p _ngcontent-cnu-c133="" class="text">
+                      PartNet-Mobility dataset is a collection of 2K articulated objects with motion annotations and rendering material.
+                      The dataset powers research for generalizable computer vision and manipulation. The dataset is a continuation of
+                      ShapeNet and PartNet.
+                    </p>
+                    <a _ngcontent-cnu-c133="" href="browse.html" mat-raised-button="" color="primary" class="mat-focus-indicator mat-raised-button mat-button-base mat-primary" tabindex="0">
+                      <span class="mat-button-wrapper">Browse</span>
+                      <span matripple="" class="mat-ripple mat-button-ripple"></span>
+                      <span class="mat-button-focus-overlay"></span>
+                    </a>
+                  </div>
+                </div>
+                
+              <div _ngcontent-cnu-c133="" style="flex: 1 0 0;"><video _ngcontent-cnu-c133="" playsinline="" loop=""
+                  muted="" autoplay="" style="width: 100%;">
+                  <source _ngcontent-cnu-c133="" src="/assets/data_demo.mp4" type="video/mp4">
+                </video></div>
+              <div _ngcontent-cnu-c133="" style="flex: 1 0 0; display: flex; align-items: center;">
+                <div _ngcontent-cnu-c133="">
+                  <h3 _ngcontent-cnu-c133="">Motion Planning Library</h3>
+                  <p _ngcontent-cnu-c133="" class="text"> We recommend using mplib for motion planning with SAPIEN.
+                    mplib is a lightweight Python package that includes common functionalities for motion planning,
+                    including path planning, inverse kinematics, and collision avoidance. </p><button
+                    _ngcontent-cnu-c133="" mat-raised-button="" color="primary"
+                    class="mat-focus-indicator mat-raised-button mat-button-base mat-primary"><span
+                      class="mat-button-wrapper">Get Started</span><span matripple=""
+                      class="mat-ripple mat-button-ripple"></span><span
+                      class="mat-button-focus-overlay"></span></button>
+                </div>
+              </div>
+              <div _ngcontent-cnu-c133="" style="flex: 1 0 0;"><video _ngcontent-cnu-c133="" playsinline="" loop=""
+                  muted="" autoplay="" style="width: 100%;">
+                  <source _ngcontent-cnu-c133="" src="/assets/mplib.mp4" type="video/mp4">
+                </video></div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<script type="importmap">
-  {
-    "imports": {
-      "three": "https://cdn.jsdelivr.net/npm/three@0.150.1/build/three.module.js",
-      "OrbitControls": "https://cdn.jsdelivr.net/npm/three@0.150.1/examples/jsm/controls/OrbitControls.js",
-      "OBJLoader": "https://cdn.jsdelivr.net/npm/three@0.150.1/examples/jsm/loaders/OBJLoader.js",
-      "MTLLoader": "https://cdn.jsdelivr.net/npm/three@0.150.1/examples/jsm/loaders/MTLLoader.js"
-    }
-  }
-</script>
-
-<script type="module">
-  import * as THREE from 'three';
-  import { OrbitControls } from 'OrbitControls';
-  import { OBJLoader } from 'OBJLoader';
-  import { MTLLoader } from 'MTLLoader';
-
-  document.addEventListener("DOMContentLoaded", function () {
-  const models = [
-    "harmmer", "cup", "cola",
-    // Add other model names
-  ];
-
-  const scalesize = [
-    "1", "1", "0.4",
-  ]
-  const container = document.getElementById("3d-models");
-  const interactiveViewer = document.getElementById("interactive-viewer");
-  const infoBox = document.getElementById("info-box"); // 确保正确引用infoBox
-
-  let currentModel = models[0];
-  // var currentindex = 0;
-  let interactiveRenderer = null; // 用于存储交互查看器的渲染器
-  
-  models.forEach((model, index) => {
-    const viewerDiv = document.createElement("div");
-    viewerDiv.className = "viewer";
-    viewerDiv.dataset.model = model;
-    viewerDiv.addEventListener("click", () => updateInteractiveViewer(model, index, viewerDiv));
-    container.appendChild(viewerDiv);
-    loadModel(model, index, viewerDiv);
-
-    // Select the first model by default
-    if (index === 0) {
-      viewerDiv.classList.add("selected");
-      loadInteractiveModel(model, index, interactiveViewer);
-      updateInfoBox(model, index); // 初始化时更新信息框
-    }
-  });
-
-  function updateInteractiveViewer(model, index, selectedViewer) {
-    currentModel = model;
-    const previousSelected = container.querySelector(".viewer.selected");
-    if (previousSelected) {
-      previousSelected.classList.remove("selected");
-    }
-    selectedViewer.classList.add("selected");
-    loadInteractiveModel(model, index, interactiveViewer);
-    updateInfoBox(model, index); // 初始化时更新信息框
-  }
-
-  function updateInfoBox(model) {
-    infoBox.innerHTML = `<p>Model: ${model} <br> Size: (H, W, L) <br> Real Object Purchase Link: <a href="https://tianxingchen.github.io">link</a> <br> Files Download link: <a href="https: //tianxingchen.github.io">link</a> </p>`;
-  }
-
-  function loadModel(model, index, viewer) {
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(50, viewer.offsetWidth / viewer.offsetHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(viewer.offsetWidth, viewer.offsetHeight);
-    viewer.appendChild(renderer.domElement);
-
-    renderer.setClearColor(0xCCCCCC);
-
-    const ambientLight = new THREE.AmbientLight(0x404040, 8);
-    scene.add(ambientLight);
-
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 8);
-    directionalLight.position.set(0, 1, 1).normalize();
-    scene.add(directionalLight);
-
-    const mtlLoader = new MTLLoader();
-    mtlLoader.setPath(`files/obj/${model}/`);
-    mtlLoader.load('base.mtl', (materials) => {
-      materials.preload();
-      const objLoader = new OBJLoader();
-      objLoader.setMaterials(materials);
-      objLoader.setPath(`files/obj/${model}/`);
-      objLoader.load('base.obj', function (object) {
-        scene.add(object);
-        object.position.set(0, 0, 0); // 确保模型位于视图中心
-        // object.scale.set(0.5, 0.5, 0.5);
-
-        const box = new THREE.Box3().setFromObject(object);
-        const center = box.getCenter(new THREE.Vector3());
-        const size = box.getSize(new THREE.Vector3());
-        
-        const maxDim = Math.max(size.x, size.y, size.z);
-        const scale = 1 / maxDim;
-        object.scale.set(scalesize[index], scalesize[index], scalesize[index]);
-
-        // camera.position.set(center.x, center.y, size.z * 2); // 调整相机位置
-        camera.position.set(center.x, center.y + size.z * 2, size.z  * 2);
-        camera.lookAt(center);
-
-        function animate() {
-          requestAnimationFrame(animate);
-          object.rotation.y += 0.01; // 自转
-          renderer.render(scene, camera);
-        }
-        animate();
-      }, undefined, function (error) {
-        console.error(`Error loading OBJ file: ${error}`);
-      });
-    }, undefined, function (error) {
-      console.error(`Error loading MTL file: ${error}`);
-    });
-
-    camera.position.z = 2;
-  }
-
-  function loadInteractiveModel(model, index, viewer) {
-    while (viewer.firstChild) {
-      viewer.removeChild(viewer.firstChild);
-    }
-
-    // 清理旧的WebGL上下文
-    if (interactiveRenderer) {
-      interactiveRenderer.dispose();
-      interactiveRenderer.forceContextLoss();
-      interactiveRenderer = null;
-    }
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(50, viewer.offsetWidth / viewer.offsetHeight, 0.1, 1000);
-    interactiveRenderer = new THREE.WebGLRenderer({ antialias: true });
-    interactiveRenderer.setSize(viewer.offsetWidth, viewer.offsetHeight);
-    viewer.appendChild(interactiveRenderer.domElement);
-
-    interactiveRenderer.setClearColor(0xCCCCCC);
-
-    const controls = new OrbitControls(camera, interactiveRenderer.domElement);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.25;
-    controls.screenSpacePanning = false;
-    controls.minDistance = 1;
-    controls.maxDistance = 1000;
-
-    const ambientLight = new THREE.AmbientLight(0x404040, 8);
-    scene.add(ambientLight);
-
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 8);
-    directionalLight.position.set(0, 1, 1).normalize();
-    scene.add(directionalLight);
-
-    const mtlLoader = new MTLLoader();
-    mtlLoader.setPath(`files/obj/${model}/`);
-    mtlLoader.load('base.mtl', (materials) => {
-      materials.preload();
-      const objLoader = new OBJLoader();
-      objLoader.setMaterials(materials);
-      objLoader.setPath(`files/obj/${model}/`);
-      objLoader.load('base.obj', function (object) {
-        scene.add(object);
-        object.position.set(0, 0, 0); // 确保模型位于视图中心
-        // object.scale.set(0.5, 0.5, 0.5);
-
-        const box = new THREE.Box3().setFromObject(object);
-        const center = box.getCenter(new THREE.Vector3());
-        const size = box.getSize(new THREE.Vector3());
-
-        const maxDim = Math.max(size.x, size.y, size.z);
-        const scale = 1 / maxDim;
-        object.scale.set(scalesize[index], scalesize[index], scalesize[index]);
-
-        camera.position.set(center.x, center.y, size.z * 2); // 调整相机位置
-        camera.lookAt(center);
-
-        function animate() {
-          requestAnimationFrame(animate);
-          controls.update();
-          directionalLight.position.copy(camera.position).add(new THREE.Vector3(0, 1, 1));
-          interactiveRenderer.render(scene, camera);
-        }
-        animate();
-      }, undefined, function (error) {
-        console.error(`Error loading OBJ file: ${error}`);
-      });
-    }, undefined, function (error) {
-      console.error(`Error loading MTL file: ${error}`);
-    });
-
-    camera.position.z = 2;
-  }
-});
-
-
-
-</script>
-
-
-
-<section class="section" style="margin-top: -60px">
-  <div class="container">
-    <!-- Abstract. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-two-thirds">
-        <h2 class="title is-2">Acknowledgements</h2>
-        <div class="content has-text-justified">
-          <p>
-            The author team would like to acknowledge <a href="https://liang-zx.github.io/">Zhixuan Liang </a>and <a href="https://yaomarkmu.github.io/">Yao Mu</a> from the University of Hong Kong for their helpful technical discussion and suggestions.<br><br>
-
-              Our code is built upon 
-              <a href="https://github.com/YanjieZe/3D-Diffusion-Policy" target="_blank">3D Diffusion Policy</a>, 
-              <a href="https://github.com/Dai-Wenxun/MotionLCM" target="_blank">MotionLCM</a>, 
-              <a href="https://github.com/luosiallen/latent-consistency-model" target="_blank">Latent Consistency Model</a>, 
-              <a href="https://github.com/real-stanford/diffusion_policy" target="_blank">Diffusion Policy</a>, 
-              <a href="https://github.com/microsoft/VRL3" target="_blank">VRL3</a>, 
-              <a href="https://github.com/Farama-Foundation/Metaworld" target="_blank">Metaworld</a>, 
-              and 
-              <a href="https://github.com/GuanxingLu/ManiGaussian" target="_blank">ManiGaussian</a>. 
-              We would like to thank the authors for their excellent works.
-          </p>
+        <div _ngcontent-cnu-c133="" class="section">
+          <div _ngcontent-cnu-c133="" class="limit-width">
+            <h2 _ngcontent-cnu-c133="">Quick Start</h2>
+            <div _ngcontent-cnu-c133="" class="quick-start-content">
+              <div _ngcontent-cnu-c133="" class="quick-start-item">
+                <h3 _ngcontent-cnu-c133="">Installation</h3> On Linux, Python &gt;= 3.8
+                <pre _ngcontent-cnu-c133="">            <code _ngcontent-cnu-c133="">pip install -U 'sapien&gt;=3.0.0b1'</code>
+          </pre> For motion planning
+                <pre _ngcontent-cnu-c133="">            <code _ngcontent-cnu-c133="">pip install mplib</code>
+          </pre>
+              </div>
+              <div _ngcontent-cnu-c133="" class="quick-start-item">
+                <h3 _ngcontent-cnu-c133="">Source code</h3> Source code for SAPIEN and mplib are available on Github <a
+                  _ngcontent-cnu-c133=""
+                  href="https://github.com/haosulab/SAPIEN">https://github.com/haosulab/SAPIEN</a>, <a
+                  _ngcontent-cnu-c133="" href="https://github.com/haosulab/mplib">https://github.com/haosulab/mplib</a>.
+              </div>
+              <div _ngcontent-cnu-c133="" class="quick-start-item">
+                <h3 _ngcontent-cnu-c133="">Reinforcement Learning?</h3> Check out our <a _ngcontent-cnu-c133=""
+                  target="_blank" href="https://sapien-sim.github.io/docs/user_guide/rl/gym.html">tutorial</a> on how to
+                build a gym-like environment with SAPIEN.
+              </div>
+              <div _ngcontent-cnu-c133="" class="quick-start-item">
+                <h3 _ngcontent-cnu-c133="">2D/3D Vision?</h3> SAPIEN supports rendering of the PartNet-Mobility dataset
+                or other 3D models. Check out our rendering <a _ngcontent-cnu-c133="" target="_blank"
+                  href="https://sapien-sim.github.io/docs/user_guide/rendering/camera.html">tutorial</a>.
+              </div>
+              <div _ngcontent-cnu-c133="" class="quick-start-item">
+                <h3 _ngcontent-cnu-c133="">Robotics?</h3> SAPIEN supports simulation for robotics. Check out our <a
+                  _ngcontent-cnu-c133="" target="_blank"
+                  href="https://sapien-sim.github.io/docs/user_guide/robotics/basic_robot.html">robotics tutorial</a>
+                and <a _ngcontent-cnu-c133="" target="_blank"
+                  href="https://motion-planning-lib.readthedocs.io/latest/index.html">motion planning tutorial</a>.
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<section class="section" id="BibTeX" style="margin-top: -60px">
-  <div class="container content">
-    <h2 class="titile">BibTeX</h2>
-    <pre><code>@article{lu2024manicm,
-      title={ManiCM: Real-time 3D Diffusion Policy via Consistency Model for Robotic Manipulation}, 
-      author={Guanxing Lu and Zifeng Gao and Tianxing Chen and Wenxun Dai and Ziwei Wang and Yansong Tang},
-      journal={arXiv preprint arXiv:2406.01586},
-      year={2024}
+        <div _ngcontent-cnu-c133="" class="section">
+          <div _ngcontent-cnu-c133="" class="limit-width">
+            <h2 _ngcontent-cnu-c133="">Publication &amp; Citation</h2>
+            <p _ngcontent-cnu-c133=""> SAPIEN is publised at CVPR 2020, the paper is available <a _ngcontent-cnu-c133=""
+                href="https://arxiv.org/abs/2003.08515">here</a>. If you use SAPIEN and its assets, please cite the
+              following works. </p>
+            <pre _ngcontent-cnu-c133="" class="narrow"><code _ngcontent-cnu-c133="">@InProceedings{Xiang_2020_SAPIEN,
+author = {Xiang, Fanbo and Qin, Yuzhe and Mo, Kaichun and Xia, Yikuan and Zhu, Hao and Liu, Fangchen and Liu, Minghua and Jiang, Hanxiao and Yuan, Yifu and Wang, He and Yi, Li and Chang, Angel X. and Guibas, Leonidas J. and Su, Hao},
+title = {{SAPIEN}: A SimulAted Part-based Interactive ENvironment},
+booktitle = {The IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
+month = {June},
+year = {2020}}</code></pre>
+            <pre _ngcontent-cnu-c133="" class="narrow"><code _ngcontent-cnu-c133="">@InProceedings{Mo_2019_CVPR,
+author = {Mo, Kaichun and Zhu, Shilin and Chang, Angel X. and Yi, Li and Tripathi, Subarna and Guibas, Leonidas J. and Su, Hao},
+title = {{PartNet}: A Large-Scale Benchmark for Fine-Grained and Hierarchical Part-Level {3D} Object Understanding},
+booktitle = {The IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
+month = {June},
+year = {2019}
 }</code></pre>
-  </div>
-</section>
-
-<footer class="footer">
-  <div class="container">
-    <div class="content has-text-centered">
-      <p>Page template borrowed from <a href="https://nerfies.github.io/"><span class="dnerf">Nerfies</span></a> and <a href="https://robot-parkour.github.io/"><span class="dnerf">Robot-Parkour</span></a>.</p>
+            <pre _ngcontent-cnu-c133="" class="narrow"><code _ngcontent-cnu-c133="">@article{chang2015shapenet,
+title={Shapenet: An information-rich 3d model repository},
+author={Chang, Angel X and Funkhouser, Thomas and Guibas, Leonidas and Hanrahan, Pat and Huang, Qixing and Li, Zimo and Savarese, Silvio and Savva, Manolis and Song, Shuran and Su, Hao and others},
+journal={arXiv preprint arXiv:1512.03012},
+year={2015}
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </app-page-home>
+    <!---->
+    <div _ngcontent-cnu-c153="" class="footnote">
+      <div _ngcontent-cnu-c153="" class="copyright">
+        <div _ngcontent-cnu-c153="">© 2020-2022 SAPIEN</div>
+      </div>
     </div>
-  </div>
-</footer>
+  </app-root>
+  <script src="./SAPIEN_files/runtime.df939d4393f8acf1.js.下载" type="module"></script>
+  <script src="./SAPIEN_files/polyfills.6f33c248bab6f475.js.下载" type="module"></script>
+  <script src="./SAPIEN_files/main.85703629eb5fbf48.js.下载" type="module"></script>
+
+  <div class="cdk-live-announcer-element cdk-visually-hidden" aria-atomic="true" aria-live="polite"></div><iframe
+    id="z16lZyZF" frameborder="0" src="./SAPIEN_files/translateSandbox.html"
+    style="width: 0px; height: 0px; display: none;"></iframe>
+  <div class="cdk-overlay-container"></div>
+</body>
+
+</html>
