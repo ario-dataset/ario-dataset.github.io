@@ -1951,7 +1951,7 @@
         loadModel_glb(model, index, viewerDiv);
         if (index === 0) {
           viewerDiv.classList.add("selected");
-          loadInteractiveModel(model, index, interactiveViewer);
+          loadInteractiveModel_glb(model, index, interactiveViewer);
           updateInfoBox(model, index);
         }
       });
@@ -1963,7 +1963,7 @@
           previousSelected.classList.remove("selected");
         }
         selectedViewer.classList.add("selected");
-        loadInteractiveModel(model, index, interactiveViewer);
+        loadInteractiveModel_glb(model, index, interactiveViewer);
         updateInfoBox(model, index);
       }
 
@@ -2078,7 +2078,7 @@
         camera.position.z = 2;
       }
 
-      function loadInteractiveModel(model, index, viewer) {
+      function loadInteractiveModel_mtl(model, index, viewer) {
         while (viewer.firstChild) {
           viewer.removeChild(viewer.firstChild);
         }
@@ -2149,6 +2149,80 @@
 
         camera.position.z = 2;
       }
+
+      function loadInteractiveModel_glb(model, index, viewer) {
+        while (viewer.firstChild) {
+          viewer.removeChild(viewer.firstChild);
+        }
+
+        if (interactiveRenderer) {
+          interactiveRenderer.dispose();
+          interactiveRenderer.forceContextLoss();
+          interactiveRenderer = null;
+        }
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(50, viewer.offsetWidth / viewer.offsetHeight, 0.1, 1000);
+        interactiveRenderer = new THREE.WebGLRenderer({ antialias: true });
+        interactiveRenderer.setSize(viewer.offsetWidth, viewer.offsetHeight);
+        interactiveRenderer.outputEncoding = THREE.sRGBEncoding;
+        viewer.appendChild(interactiveRenderer.domElement);
+
+        interactiveRenderer.setClearColor(0xCCCCCC);
+
+        const controls = new OrbitControls(camera, interactiveRenderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.25;
+        controls.screenSpacePanning = false;
+        controls.minDistance = 1;
+        controls.maxDistance = 1000;
+
+        const ambientLight = new THREE.AmbientLight(0x404040, 6);
+        scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
+        directionalLight.position.set(0, 1, 1).normalize();
+        scene.add(directionalLight);
+
+        const gltfLoader = new GLTFLoader();
+        gltfLoader.load(`files/glb/${model}/base.glb`, function (gltf) {
+          const object = gltf.scene;
+          scene.add(object);
+          object.position.set(0, 0, 0);
+          object.traverse((node) => {
+            if (node.isMesh) {
+              node.material = new THREE.MeshStandardMaterial({
+                map: node.material.map,
+                roughness: node.material.roughness,
+                metalness: node.material.metalness,
+              });
+            }
+          });
+          const box = new THREE.Box3().setFromObject(object);
+          const center = box.getCenter(new THREE.Vector3());
+          const size = box.getSize(new THREE.Vector3());
+
+          const maxDim = Math.max(size.x, size.y, size.z);
+          const scale = 1 / maxDim;
+          object.scale.set(scalesize[index], scalesize[index], scalesize[index]);
+
+          camera.position.set(center.x, center.y, size.z * 2);
+          camera.lookAt(center);
+
+          function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            directionalLight.position.copy(camera.position).add(new THREE.Vector3(0, 1, 1));
+            interactiveRenderer.render(scene, camera);
+          }
+          animate();
+        }, undefined, function (error) {
+          console.error(`Error loading GLB file: ${error}`);
+        });
+
+        camera.position.z = 2;
+      }
+
     });
   </script>
 
