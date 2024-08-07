@@ -1915,8 +1915,23 @@
     import { MTLLoader } from 'MTLLoader';
 
     document.addEventListener("DOMContentLoaded", function () {
-      const models = ["harmmer", "cup", "cola"];
+      const models = ['001_Assam_Milk_Tea', '002_pepsi_cola', '003_Oriental_Leaf_Jasmine_Tea',
+       '004_Oriental_Leaf _Green _Tangerine_Puer', '005_Oriental_Leaf_Oolong_Tea', '006_fanta',
+        '007_Pulpy_Orange', '008_Gatorade_Orange', '009_Master_Kong_Green_Tea', '010_Master_Kong_Jasmine_Tea',
+         '011_Coca_Cola', '012_Pulse', '013_Nongfu_Spring', '014_Nestle_Coffee', '015_Suntoku_Oolong_Tea',
+          '016_Wanglaoji', '017_Starbucks_Coffee', '018_Sprite', '019_coaste', '020_hammer', '020_hammer_2',
+           '022_cup', '022_cup_with_liquid', '024_brush', '025_red_bottle', '026_green_bottle', '027_table_tennis',
+            '028_dustpan', '029_test_tube_holder_glb', '030_power_drill', '031_mark_cup', '032_screwdriver',
+             '033_fork', '034_knife', '035_apple', '036_cabine', '037_box', '038_test_tube'];
       const scalesize = ["1", "1", "0.4"];
+      const type = ['001_Assam_Milk_Tea', '002_pepsi_cola', '003_Oriental_Leaf_Jasmine_Tea',
+       '004_Oriental_Leaf _Green _Tangerine_Puer', '005_Oriental_Leaf_Oolong_Tea', '006_fanta',
+        '007_Pulpy_Orange', '008_Gatorade_Orange', '009_Master_Kong_Green_Tea', '010_Master_Kong_Jasmine_Tea',
+         '011_Coca_Cola', '012_Pulse', '013_Nongfu_Spring', '014_Nestle_Coffee', '015_Suntoku_Oolong_Tea',
+          '016_Wanglaoji', '017_Starbucks_Coffee', '018_Sprite', '0', '0', '020_hammer_2',
+           '0', '0', '0', '0', '0', '0',
+            '0', '029_test_tube_holder_glb', '030_power_drill', '031_mark_cup', '032_screwdriver',
+             '033_fork', '034_knife', '0', '036_cabine', '037_box', '038_test_tube'];
       const container = document.getElementById("3d-models");
       const interactiveViewer = document.getElementById("interactive-viewer");
       const infoBox = document.getElementById("info-box");
@@ -1930,7 +1945,9 @@
         viewerDiv.dataset.model = model;
         viewerDiv.addEventListener("click", () => updateInteractiveViewer(model, index, viewerDiv));
         container.appendChild(viewerDiv);
-        loadModel(model, index, viewerDiv);
+        if (type[index] == '0')
+          loadModel_mtl(model, index, viewerDiv);
+        else loadModel_glb(model, index, viewerDiv);
 
         if (index === 0) {
           viewerDiv.classList.add("selected");
@@ -1954,7 +1971,7 @@
         infoBox.innerHTML = `<p>Model: ${model} <br> Size: (H, W, L) <br> Real Object Purchase Link: <a href="https://tianxingchen.github.io">link</a> <br> Files Download link: <a href="https://tianxingchen.github.io">link</a> </p>`;
       }
 
-      function loadModel(model, index, viewer) {
+      function loadModel_mtl(model, index, viewer) {
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(50, viewer.offsetWidth / viewer.offsetHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -2002,6 +2019,60 @@
           });
         }, undefined, function (error) {
           console.error(`Error loading MTL file: ${error}`);
+        });
+
+        camera.position.z = 2;
+      }
+
+      function loadModel_glb(model, index, viewer) {
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(50, viewer.offsetWidth / viewer.offsetHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(viewer.offsetWidth, viewer.offsetHeight);
+        renderer.outputEncoding = THREE.sRGBEncoding;
+        viewer.appendChild(renderer.domElement);
+        renderer.setClearColor(0xCCCCCC);
+
+        const ambientLight = new THREE.AmbientLight(0x404040, 5);
+        scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
+        directionalLight.position.set(0, 1, 1).normalize();
+        scene.add(directionalLight);
+
+        const gltfLoader = new GLTFLoader();
+        gltfLoader.load(`files/glb/${model}/base.glb`, function (gltf) {
+          const object = gltf.scene;
+          scene.add(object);
+          object.position.set(0, 0, 0);
+          object.traverse((node) => {
+            if (node.isMesh) {
+              node.material = new THREE.MeshStandardMaterial({
+                map: node.material.map,
+                roughness: node.material.roughness,
+                metalness: node.material.metalness,
+              });
+            }
+          });
+          const box = new THREE.Box3().setFromObject(object);
+          const center = box.getCenter(new THREE.Vector3());
+          const size = box.getSize(new THREE.Vector3());
+
+          const maxDim = Math.max(size.x, size.y, size.z);
+          const scale = 1 / maxDim;
+          object.scale.set(scalesize[index], scalesize[index], scalesize[index]);
+
+          camera.position.set(center.x, center.y + size.z * 2, size.z * 2);
+          camera.lookAt(center);
+
+          function animate() {
+            requestAnimationFrame(animate);
+            object.rotation.y += 0.01;
+            renderer.render(scene, camera);
+          }
+          animate();
+        }, undefined, function (error) {
+          console.error(`Error loading GLB file: ${error}`);
         });
 
         camera.position.z = 2;
