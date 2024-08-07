@@ -1945,10 +1945,10 @@
         viewerDiv.dataset.model = model;
         viewerDiv.addEventListener("click", () => updateInteractiveViewer(model, index, viewerDiv));
         container.appendChild(viewerDiv);
-        if (type[index] == '0')
-          loadModel_mtl(model, index, viewerDiv);
-        else loadModel_glb(model, index, viewerDiv);
-
+        // if (type[index] == '0')
+        //   loadModel_mtl(model, index, viewerDiv);
+        // else loadModel_glb(model, index, viewerDiv);
+        loadModel_glb(model, index, viewerDiv);
         if (index === 0) {
           viewerDiv.classList.add("selected");
           loadInteractiveModel(model, index, interactiveViewer);
