@@ -1947,10 +1947,10 @@
         viewerDiv.dataset.model = model;
         viewerDiv.addEventListener("click", () => updateInteractiveViewer(model, index, viewerDiv));
         container.appendChild(viewerDiv);
-        // if (type[index] == '0')
-        //   loadModel_mtl(model, index, viewerDiv);
-        // else loadModel_glb(model, index, viewerDiv);
-        loadModel_glb(model, index, viewerDiv);
+        if (type[index] == '0')
+          loadModel_mtl(model, index, viewerDiv);
+        else loadModel_glb(model, index, viewerDiv);
+        // loadModel_glb(model, index, viewerDiv);
         if (index === 0) {
           viewerDiv.classList.add("selected");
           loadInteractiveModel_glb(model, index, interactiveViewer);
@@ -1965,7 +1965,10 @@
           previousSelected.classList.remove("selected");
         }
         selectedViewer.classList.add("selected");
-        loadInteractiveModel_glb(model, index, interactiveViewer);
+        if (type[index] == '0')
+        loadInteractiveModel_mtl(model, index, interactiveViewer);
+        else loadInteractiveModel_glb(model, index, interactiveViewer);
+        // loadInteractiveModel_glb(model, index, interactiveViewer);
         updateInfoBox(model, index);
       }
 
