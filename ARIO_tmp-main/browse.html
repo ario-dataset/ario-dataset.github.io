@@ -1998,7 +1998,7 @@
           const objLoader = new OBJLoader();
           objLoader.setMaterials(materials);
           objLoader.setPath(`files/obj/${model}/`);
-          objLoader.load('base.obj', function (object) {
+          objLoader.load('textured.obj', function (object) {
             scene.add(object);
             object.position.set(0, 0, 0);
 
