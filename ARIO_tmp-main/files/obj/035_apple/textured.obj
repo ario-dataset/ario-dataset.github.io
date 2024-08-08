@@ -1,5 +1,5 @@
 # https://github.com/mikedh/trimesh
-mtllib material_0.mtl
+mtllib base.mtl
 usemtl material_0
 v -0.01829210 -0.01127250 -0.03453050
 v -0.01807810 -0.01039250 -0.03470550
