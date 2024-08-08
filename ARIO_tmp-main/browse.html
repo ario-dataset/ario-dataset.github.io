@@ -1919,12 +1919,7 @@
     document.addEventListener("DOMContentLoaded", function () {
       const models = ['001_Assam_Milk_Tea', '002_pepsi_cola', '003_Oriental_Leaf_Jasmine_Tea',
        '004_Oriental_Leaf _Green _Tangerine_Puer', '005_Oriental_Leaf_Oolong_Tea', '006_fanta',
-        '007_Pulpy_Orange', '008_Gatorade_Orange', '009_Master_Kong_Green_Tea', '010_Master_Kong_Jasmine_Tea',
-         '011_Coca_Cola', '012_Pulse', '013_Nongfu_Spring', '014_Nestle_Coffee', '015_Suntoku_Oolong_Tea',
-          '016_Wanglaoji', '017_Starbucks_Coffee', '018_Sprite', '019_coaste', '020_hammer', '020_hammer_2',
-           '022_cup', '022_cup_with_liquid', '024_brush', '025_red_bottle', '026_green_bottle', '027_table_tennis',
-            '028_dustpan', '029_test_tube_holder_glb', '030_power_drill', '031_mark_cup', '032_screwdriver',
-             '033_fork', '034_knife', '035_apple', '038_test_tube'];
+        '007_Pulpy_Orange', '008_Gatorade_Orange', '009_Master_Kong_Green_Tea'];
       const scalesize = ["1", "1", "0.4"];
       const type = ['001_Assam_Milk_Tea', '002_pepsi_cola', '003_Oriental_Leaf_Jasmine_Tea',
        '004_Oriental_Leaf _Green _Tangerine_Puer', '005_Oriental_Leaf_Oolong_Tea', '006_fanta',
@@ -2123,7 +2118,7 @@
           const objLoader = new OBJLoader();
           objLoader.setMaterials(materials);
           objLoader.setPath(`files/obj/${model}/`);
-          objLoader.load('base.obj', function (object) {
+          objLoader.load('textured.obj', function (object) {
             scene.add(object);
             object.position.set(0, 0, 0);
 
